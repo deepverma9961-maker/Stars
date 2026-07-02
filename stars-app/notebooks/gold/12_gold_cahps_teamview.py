@@ -5,7 +5,7 @@
 # MAGIC Creates `gold_cahps_overview` (28 rows) and `gold_team_view` (6 departments × ~7 rows).
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -35,7 +35,7 @@ CAHPS_DATA = {
     "H7601": (4.1, 4.1, 83, 2_950_000),
 }
 
-plans = spark.table(f"{CATALOG}.silver.silver_plan").filter("contract_id NOT LIKE '%B'").collect()
+plans = spark.table(f"{CATALOG}.stars_silver.silver_plan").filter("contract_id NOT LIKE '%B'").collect()
 plan_map = {r.contract_id: r.plan_key for r in plans}
 
 cahps_rows = []
@@ -67,7 +67,7 @@ _cahps_schema = StructType([
     StructField("qbp_at_stake_amount",     DoubleType(),  True),
     StructField("last_updated",            StringType(),  True),
 ])
-spark.createDataFrame(cahps_rows, _cahps_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.gold.gold_cahps_overview")
+spark.createDataFrame(cahps_rows, _cahps_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.stars_gold.gold_cahps_overview")
 print(f"gold_cahps_overview: {len(cahps_rows)} rows")
 
 # COMMAND ----------
@@ -109,6 +109,6 @@ _team_schema = StructType([
     StructField("action_status",    StringType(),               True),
     StructField("next_action",      StringType(),               True),
 ])
-spark.createDataFrame(team_rows, _team_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.gold.gold_team_view")
+spark.createDataFrame(team_rows, _team_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.stars_gold.gold_team_view")
 print(f"gold_team_view: {len(team_rows)} rows")
-display(spark.table(f"{CATALOG}.gold.gold_team_view").select("department", "on_track_count", "at_risk_count", "critical_count"))
+display(spark.table(f"{CATALOG}.stars_gold.gold_team_view").select("department", "on_track_count", "at_risk_count", "critical_count"))

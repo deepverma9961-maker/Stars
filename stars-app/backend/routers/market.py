@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(tags=["market"])
 
-_CATALOG = "medicare_stars.gold_b"
+_CATALOG = "aiagneticdemo.stars_gold"
 
 _ORG_MAP = {
     "H3312": "FLORIDA HEALTH CARE PLAN, INC.",
@@ -247,7 +247,7 @@ def market_measure_stars(contracts: str = ""):
         return []
     placeholders = ",".join(f"'{c}'" for c in cid_list[:50])
 
-    _LOOKUP = "medicare_stars.bronze_b"
+    _LOOKUP = "aiagneticdemo.stars_bronze"
     try:
         sql = f"""
             SELECT SUBSTRING(m.contract_id, 1, 5) as contract_id,

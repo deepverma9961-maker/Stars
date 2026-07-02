@@ -5,7 +5,7 @@
 # MAGIC Creates `gold_campaign_performance`, `gold_alert_priority`, `gold_intervention_hub`.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -98,14 +98,14 @@ _camp_schema = StructType([
     StructField("campaign_end_date",   StringType(),  True),
     StructField("measurement_year",    IntegerType(), True),
 ])
-spark.createDataFrame(campaign_rows, _camp_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.gold.gold_campaign_performance")
+spark.createDataFrame(campaign_rows, _camp_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.stars_gold.gold_campaign_performance")
 print(f"gold_campaign_performance: {len(campaign_rows)} rows")
 
 # COMMAND ----------
 # --- gold_alert_priority ---
-measures = spark.table(f"{CATALOG}.silver.silver_measure").collect()
-scorecard = spark.table(f"{CATALOG}.gold.gold_measure_scorecard").filter(
-    "measurement_year = 2025 AND plan_key IN (SELECT plan_key FROM medicare_stars.silver.silver_plan WHERE contract_id = 'H3312')"
+measures = spark.table(f"{CATALOG}.stars_silver.silver_measure").collect()
+scorecard = spark.table(f"{CATALOG}.stars_gold.gold_measure_scorecard").filter(
+    "measurement_year = 2025 AND plan_key IN (SELECT plan_key FROM aiagneticdemo.stars_silver.silver_plan WHERE contract_id = 'H3312')"
 ).collect()
 
 measure_map = {m.measure_key: m for m in measures}
@@ -173,7 +173,7 @@ _alert_schema = StructType([
     StructField("is_active",        BooleanType(), True),
     StructField("measurement_year", IntegerType(), True),
 ])
-spark.createDataFrame(alert_rows, _alert_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.gold.gold_alert_priority")
+spark.createDataFrame(alert_rows, _alert_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.stars_gold.gold_alert_priority")
 print(f"gold_alert_priority: {len(alert_rows)} rows")
 
 # COMMAND ----------
@@ -219,5 +219,5 @@ _iv_schema = StructType([
     StructField("target_member_count",  LongType(),    True),
     StructField("measurement_year",     IntegerType(), True),
 ])
-spark.createDataFrame(iv_rows, _iv_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.gold.gold_intervention_hub")
+spark.createDataFrame(iv_rows, _iv_schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.stars_gold.gold_intervention_hub")
 print(f"gold_intervention_hub: {len(iv_rows)} rows")

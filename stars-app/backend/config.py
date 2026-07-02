@@ -7,9 +7,10 @@ class Settings(BaseSettings):
     databricks_host: str = ""
     databricks_http_path: str = ""
     databricks_token: str = ""
-    catalog: str = "medicare_stars"
-    schema_gold: str = "gold"
-    schema_silver: str = "silver"
+    catalog: str = "aiagneticdemo"
+    schema_gold: str = "stars_gold"
+    schema_silver: str = "stars_silver"
+    schema_bronze: str = "stars_bronze"
 
     twilio_account_sid: str = ""
     twilio_auth_token: str = ""
@@ -30,6 +31,10 @@ class Settings(BaseSettings):
     @property
     def silver(self) -> str:
         return f"{self.catalog}.{self.schema_silver}"
+
+    @property
+    def bronze(self) -> str:
+        return f"{self.catalog}.{self.schema_bronze}"
 
 
 settings = Settings()

@@ -9,7 +9,7 @@
 # MAGIC - `gold_hos_provider_scorecard` — provider-level gap counts per measure
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -70,7 +70,7 @@ measure_schema = StructType([
 spark.createDataFrame(measure_rows, measure_schema) \
     .write.format("delta").mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable(f"{CATALOG}.gold.gold_hos_measures")
+    .saveAsTable(f"{CATALOG}.stars_gold.gold_hos_measures")
 
 print(f"gold_hos_measures: {len(measure_rows)} rows")
 
@@ -107,7 +107,7 @@ STAR_OFFSET = {
 }
 
 # Load plans from silver
-plans = spark.table(f"{CATALOG}.silver.silver_plan").collect()
+plans = spark.table(f"{CATALOG}.stars_silver.silver_plan").collect()
 contract_ids = [p.contract_id for p in plans if not p.contract_id.endswith("B")]
 
 scorecard_rows = []
@@ -198,7 +198,7 @@ scorecard_schema = StructType([
 spark.createDataFrame(scorecard_rows, scorecard_schema) \
     .write.format("delta").mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable(f"{CATALOG}.gold.gold_hos_scorecard")
+    .saveAsTable(f"{CATALOG}.stars_gold.gold_hos_scorecard")
 
 print(f"gold_hos_scorecard: {len(scorecard_rows)} rows")
 
@@ -333,7 +333,7 @@ member_schema = StructType([
 spark.createDataFrame(member_rows, member_schema) \
     .write.format("delta").mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable(f"{CATALOG}.gold.gold_hos_members")
+    .saveAsTable(f"{CATALOG}.stars_gold.gold_hos_members")
 
 print(f"gold_hos_members: {len(member_rows)} rows")
 
@@ -380,7 +380,7 @@ provider_schema = StructType([
 spark.createDataFrame(provider_rows, provider_schema) \
     .write.format("delta").mode("overwrite") \
     .option("overwriteSchema", "true") \
-    .saveAsTable(f"{CATALOG}.gold.gold_hos_provider_scorecard")
+    .saveAsTable(f"{CATALOG}.stars_gold.gold_hos_provider_scorecard")
 
 print(f"gold_hos_provider_scorecard: {len(provider_rows)} rows")
 
@@ -395,5 +395,5 @@ print(f"gold_hos_provider_scorecard: {len(provider_rows)} rows")
 
 # COMMAND ----------
 for tbl in ["gold_hos_measures", "gold_hos_scorecard", "gold_hos_members", "gold_hos_provider_scorecard"]:
-    cnt = spark.table(f"{CATALOG}.gold.{tbl}").count()
+    cnt = spark.table(f"{CATALOG}.stars_gold.{tbl}").count()
     print(f"  {tbl}: {cnt:,} rows")

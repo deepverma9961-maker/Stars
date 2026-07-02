@@ -5,7 +5,7 @@
 # MAGIC Creates `silver_measure` (45 measures) and `silver_cahps_response` (12k top-box flagged).
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 
 # COMMAND ----------
@@ -73,7 +73,7 @@ measure_rows = [
         measure_category=m[2], part=m[3], measure_weight=m[4])
     for i, m in enumerate(MEASURES)
 ]
-spark.createDataFrame(measure_rows).write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.silver.silver_measure")
+spark.createDataFrame(measure_rows).write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_silver.silver_measure")
 print(f"silver_measure: {len(measure_rows)} rows")
 
 # COMMAND ----------
@@ -81,7 +81,7 @@ print(f"silver_measure: {len(measure_rows)} rows")
 from pyspark.sql import functions as F
 from pyspark.sql.functions import col
 
-bronze_cahps = spark.table(f"{CATALOG}.bronze.bronze_cahps_survey_raw")
+bronze_cahps = spark.table(f"{CATALOG}.stars_bronze.bronze_cahps_survey_raw")
 
 silver_cahps = (
     bronze_cahps
@@ -99,7 +99,7 @@ silver_cahps = (
         "response_value", "scale_type", "top_box_flag",
     )
 )
-silver_cahps.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.silver.silver_cahps_response")
+silver_cahps.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_silver.silver_cahps_response")
 print(f"silver_cahps_response: {silver_cahps.count():,} rows")
 
 # Validate top-box rates by composite

@@ -673,7 +673,7 @@ s9.addText("Audit Trail & Databricks Logging", {
   fontSize: 28, fontFace: "Calibri", color: C.darkBg, bold: true, margin: 0,
 });
 
-s9.addText("Every outreach interaction is persisted to medicare_stars.silver.outreach_activity_log with a timestamped audit trail.", {
+s9.addText("Every outreach interaction is persisted to aiagneticdemo.stars_silver.outreach_activity_log with a timestamped audit trail.", {
   x: 0.6, y: 0.85, w: 8.8, h: 0.35,
   fontSize: 11, fontFace: "Calibri", color: C.grayDark,
 });

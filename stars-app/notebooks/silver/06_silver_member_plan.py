@@ -6,7 +6,7 @@
 # MAGIC All PII (MBI, phone, email) is SHA-256 hashed. `display_name` is first name + last initial only.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 
 # COMMAND ----------
@@ -18,11 +18,11 @@ from faker import Faker
 import random
 
 spark = SparkSession.builder.getOrCreate()
-spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.silver")
+spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.stars_silver")
 
 # COMMAND ----------
 # --- silver_member ---
-bronze = spark.table(f"{CATALOG}.bronze.bronze_enrollment_raw")
+bronze = spark.table(f"{CATALOG}.stars_bronze.bronze_enrollment_raw")
 
 silver_member = (
     bronze
@@ -46,7 +46,7 @@ silver_member = (
         "utilization_segment", "pcp_provider_key", "effective_date",
     )
 )
-silver_member.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.silver.silver_member")
+silver_member.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_silver.silver_member")
 print(f"silver_member: {silver_member.count():,} rows")
 
 # COMMAND ----------
@@ -84,7 +84,7 @@ CONTRACTS = [
 
 plan_rows = [{"plan_key": f"PLN-{i:04d}", "contract_id": c[0], "plan_name": c[1], "state": c[2],
               "enrollment_count": c[3], "product_type": c[4]} for i, c in enumerate(CONTRACTS)]
-spark.createDataFrame(plan_rows).write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.silver.silver_plan")
+spark.createDataFrame(plan_rows).write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_silver.silver_plan")
 print(f"silver_plan: {len(plan_rows)} rows")
 
 # COMMAND ----------
@@ -109,5 +109,5 @@ for i in range(12_000):
         state=r.choice(["FL","TX","CA","PA","NY","OH","AZ","GA","IL","NC","MI","WA","VA","CO"]),
     ))
 
-spark.createDataFrame(provider_rows).write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.silver.silver_provider")
+spark.createDataFrame(provider_rows).write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_silver.silver_provider")
 print(f"silver_provider: {len(provider_rows)} rows")

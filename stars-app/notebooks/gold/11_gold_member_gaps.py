@@ -6,7 +6,7 @@
 # MAGIC with propensity scores, recommended channel/incentive, outreach history.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -26,17 +26,17 @@ GAP_STATUS_WEIGHTS = [55, 30, 15]
 GAP_COUNTS_WEIGHTS = [25, 30, 25, 10, 5, 5]
 GAP_COUNTS = [0, 1, 2, 3, 4, 5]
 
-members = spark.table(f"{CATALOG}.silver.silver_member").select(
+members = spark.table(f"{CATALOG}.stars_silver.silver_member").select(
     "member_key", "member_id", "contract_id", "utilization_segment"
 ).collect()
 
-measures = {r.measure_code: r.measure_key for r in spark.table(f"{CATALOG}.silver.silver_measure").collect()}
-plans = {r.contract_id: r.plan_key for r in spark.table(f"{CATALOG}.silver.silver_plan").collect()}
+measures = {r.measure_code: r.measure_key for r in spark.table(f"{CATALOG}.stars_silver.silver_measure").collect()}
+plans = {r.contract_id: r.plan_key for r in spark.table(f"{CATALOG}.stars_silver.silver_plan").collect()}
 
 # Get last outreach dates from silver_outreach_event
 outreach_dates = {
     r.member_key: r.last_date
-    for r in spark.table(f"{CATALOG}.silver.silver_outreach_event")
+    for r in spark.table(f"{CATALOG}.stars_silver.silver_outreach_event")
     .groupBy("member_key")
     .agg({"outreach_date": "max"})
     .withColumnRenamed("max(outreach_date)", "last_date")
@@ -137,8 +137,8 @@ for i in range(0, len(rows), CHUNK):
     chunk_df = spark.createDataFrame(rows[i:i + CHUNK], _schema)
     mode = "overwrite" if i == 0 else "append"
     opts = {"overwriteSchema": "true"} if mode == "overwrite" else {}
-    chunk_df.write.format("delta").mode(mode).options(**opts).saveAsTable(f"{CATALOG}.gold.gold_member_gap")
+    chunk_df.write.format("delta").mode(mode).options(**opts).saveAsTable(f"{CATALOG}.stars_gold.gold_member_gap")
 
-total = spark.table(f"{CATALOG}.gold.gold_member_gap").count()
+total = spark.table(f"{CATALOG}.stars_gold.gold_member_gap").count()
 print(f"gold_member_gap: {total:,} rows")
-display(spark.table(f"{CATALOG}.gold.gold_member_gap").groupBy("gap_status").count().orderBy("gap_status"))
+display(spark.table(f"{CATALOG}.stars_gold.gold_member_gap").groupBy("gap_status").count().orderBy("gap_status"))

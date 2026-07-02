@@ -6,7 +6,7 @@
 
 # COMMAND ----------
 dbutils.widgets.text("seed", "42")
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 
 SEED = int(dbutils.widgets.get("seed"))
 CATALOG = dbutils.widgets.get("catalog")
@@ -64,6 +64,6 @@ for i in range(N_RESPONDENTS):
 
 # COMMAND ----------
 df = spark.createDataFrame(rows)
-df.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.bronze.bronze_cahps_survey_raw")
-print(f"Written {df.count():,} rows to {CATALOG}.bronze.bronze_cahps_survey_raw")
+df.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_bronze.bronze_cahps_survey_raw")
+print(f"Written {df.count():,} rows to {CATALOG}.stars_bronze.bronze_cahps_survey_raw")
 display(df.groupBy("composite_code").agg({"response_value": "avg"}).orderBy("composite_code"))

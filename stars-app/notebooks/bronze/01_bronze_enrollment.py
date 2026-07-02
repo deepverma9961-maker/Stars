@@ -6,7 +6,7 @@
 
 # COMMAND ----------
 dbutils.widgets.text("seed", "42")
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 dbutils.widgets.text("n_members", "100000")
 
 SEED = int(dbutils.widgets.get("seed"))
@@ -95,7 +95,7 @@ _schema = StructType([
 ])
 df = spark.createDataFrame(rows, _schema)
 spark.sql(f"CREATE CATALOG IF NOT EXISTS {CATALOG}")
-spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.bronze")
-df.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.bronze.bronze_enrollment_raw")
-print(f"Written {df.count():,} rows to {CATALOG}.bronze.bronze_enrollment_raw")
+spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.stars_bronze")
+df.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_bronze.bronze_enrollment_raw")
+print(f"Written {df.count():,} rows to {CATALOG}.stars_bronze.bronze_enrollment_raw")
 display(df.limit(5))

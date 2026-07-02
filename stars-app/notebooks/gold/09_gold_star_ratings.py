@@ -5,7 +5,7 @@
 # MAGIC Creates `gold_star_rating_summary` — one row per plan with overall star ratings.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 dbutils.widgets.text("measurement_year", "2025")
 
 CATALOG = dbutils.widgets.get("catalog")
@@ -15,7 +15,7 @@ YEAR = int(dbutils.widgets.get("measurement_year"))
 from pyspark.sql import SparkSession, Row
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DoubleType, BooleanType
 spark = SparkSession.builder.getOrCreate()
-spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.gold")
+spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.stars_gold")
 
 # COMMAND ----------
 # Reference star ratings from stars_v2.html for all 14 contracts
@@ -36,7 +36,7 @@ STAR_DATA = [
     ("H7601", 4.0, 4.0, 4.0, 4.1, 4.0, 3.8, True,  2_950_000),
 ]
 
-plans = spark.table(f"{CATALOG}.silver.silver_plan") \
+plans = spark.table(f"{CATALOG}.stars_silver.silver_plan") \
     .filter("contract_id NOT LIKE '%B'") \
     .select("plan_key", "contract_id").collect()
 plan_map = {r.contract_id: r.plan_key for r in plans}
@@ -77,6 +77,6 @@ _schema = StructType([
     StructField("estimated_bonus_amount", DoubleType(),  True),
     StructField("last_updated",           StringType(),  True),
 ])
-spark.createDataFrame(rows, _schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.gold.gold_star_rating_summary")
+spark.createDataFrame(rows, _schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.stars_gold.gold_star_rating_summary")
 print(f"gold_star_rating_summary: {len(rows)} rows written")
-display(spark.table(f"{CATALOG}.gold.gold_star_rating_summary").select("contract_id", "projected_star_rating", "bonus_eligible_flag"))
+display(spark.table(f"{CATALOG}.stars_gold.gold_star_rating_summary").select("contract_id", "projected_star_rating", "bonus_eligible_flag"))

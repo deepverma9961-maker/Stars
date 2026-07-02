@@ -211,8 +211,8 @@ def get_hos_measures(contract_id: str = Query("H3312")):
                    s.eligible_count, s.documented_count, s.open_gap_count,
                    s.survey_sent, s.survey_responded, s.survey_no, s.survey_no_resp,
                    s.awv_pct, s.awv_note
-            FROM medicare_stars.gold.gold_hos_measures m
-            JOIN medicare_stars.gold.gold_hos_scorecard s
+            FROM aiagneticdemo.stars_gold.gold_hos_measures m
+            JOIN aiagneticdemo.stars_gold.gold_hos_scorecard s
               ON m.measure_id = s.measure_id AND s.contract_id = '{contract_id}'
             WHERE s.measurement_year = 2025
             ORDER BY s.current_rate ASC
@@ -266,7 +266,7 @@ def get_hos_members(
                    flag_reason, channel, contact_attempts, last_contact,
                    mock_survey_response, last_provider_visit,
                    comorbidities, homebound
-            FROM medicare_stars.gold.gold_hos_members
+            FROM aiagneticdemo.stars_gold.gold_hos_members
             WHERE contract_id = '{contract_id}' AND measure_id = '{measure_id}'
               AND measurement_year = 2025
             ORDER BY urgency_score DESC
@@ -315,7 +315,7 @@ def get_hos_providers(contract_id: str = Query("H3312"), measure_id: str = Query
     try:
         rows = query(f"""
             SELECT provider_name, open_gap_count
-            FROM medicare_stars.gold.gold_hos_provider_scorecard
+            FROM aiagneticdemo.stars_gold.gold_hos_provider_scorecard
             WHERE contract_id = '{contract_id}' AND measure_id = '{measure_id}'
               AND measurement_year = 2025
             ORDER BY open_gap_count DESC
@@ -340,7 +340,7 @@ def get_hos_summary(contract_id: str = Query("H3312")):
                    COUNT(*) as total_measures,
                    SUM(s.open_gap_count) as total_gaps,
                    AVG(s.awv_pct) as avg_awv
-            FROM medicare_stars.gold.gold_hos_scorecard s
+            FROM aiagneticdemo.stars_gold.gold_hos_scorecard s
             WHERE s.contract_id = '{contract_id}' AND s.measurement_year = 2025
         """)
         if rows and rows[0].get("avg_star"):

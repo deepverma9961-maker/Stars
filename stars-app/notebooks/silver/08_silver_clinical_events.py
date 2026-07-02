@@ -6,7 +6,7 @@
 # MAGIC `silver_outreach_event`, `silver_call_event` from bronze sources.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 
 # COMMAND ----------
@@ -18,8 +18,8 @@ spark = SparkSession.builder.getOrCreate()
 
 # COMMAND ----------
 # --- silver_claim ---
-bronze_claims = spark.table(f"{CATALOG}.bronze.bronze_claims_raw")
-member_map = spark.table(f"{CATALOG}.silver.silver_member").select("member_id", "member_key")
+bronze_claims = spark.table(f"{CATALOG}.stars_bronze.bronze_claims_raw")
+member_map = spark.table(f"{CATALOG}.stars_silver.silver_member").select("member_id", "member_key")
 
 silver_claim = (
     bronze_claims
@@ -32,12 +32,12 @@ silver_claim = (
         "cpt_code", "claim_type", "plan_paid_amount", "member_paid_amount",
     )
 )
-silver_claim.write.format("delta").mode("overwrite").partitionBy("service_month").saveAsTable(f"{CATALOG}.silver.silver_claim")
+silver_claim.write.format("delta").mode("overwrite").partitionBy("service_month").saveAsTable(f"{CATALOG}.stars_silver.silver_claim")
 print(f"silver_claim: {silver_claim.count():,} rows")
 
 # COMMAND ----------
 # --- silver_pharmacy_fill ---
-bronze_rx = spark.table(f"{CATALOG}.bronze.bronze_pharmacy_raw")
+bronze_rx = spark.table(f"{CATALOG}.stars_bronze.bronze_pharmacy_raw")
 
 silver_rx = (
     bronze_rx
@@ -53,12 +53,12 @@ silver_rx = (
         "generic_flag", "pdc_compliant",
     )
 )
-silver_rx.write.format("delta").mode("overwrite").partitionBy("fill_month").saveAsTable(f"{CATALOG}.silver.silver_pharmacy_fill")
+silver_rx.write.format("delta").mode("overwrite").partitionBy("fill_month").saveAsTable(f"{CATALOG}.stars_silver.silver_pharmacy_fill")
 print(f"silver_pharmacy_fill: {silver_rx.count():,} rows")
 
 # COMMAND ----------
 # --- silver_enrollment ---
-bronze_enroll = spark.table(f"{CATALOG}.bronze.bronze_enrollment_raw")
+bronze_enroll = spark.table(f"{CATALOG}.stars_bronze.bronze_enrollment_raw")
 silver_enroll = (
     bronze_enroll
     .join(member_map, "member_id", "left")
@@ -69,7 +69,7 @@ silver_enroll = (
         "effective_date", "termination_date",
     )
 )
-silver_enroll.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.silver.silver_enrollment")
+silver_enroll.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_silver.silver_enrollment")
 print(f"silver_enrollment: {silver_enroll.count():,} rows")
 
 # COMMAND ----------
@@ -79,7 +79,7 @@ CHANNELS = ["Call", "SMS", "Email", "Portal"]
 MEASURES = ["COL", "CBP", "KED", "AMM", "OMW", "HBD", "SPC", "BCS", "EED", "MRP", "TRC"]
 
 outreach_rows = []
-members_sample = spark.table(f"{CATALOG}.silver.silver_member").select("member_key", "member_id").limit(60_000).collect()
+members_sample = spark.table(f"{CATALOG}.stars_silver.silver_member").select("member_key", "member_id").limit(60_000).collect()
 
 for row in members_sample:
     r = random.Random(hash(row.member_key) & 0xFFFFFFFF)
@@ -101,14 +101,14 @@ CHUNK = 100_000
 for i in range(0, len(outreach_rows), CHUNK):
     chunk_df = spark.createDataFrame(outreach_rows[i:i + CHUNK])
     mode = "overwrite" if i == 0 else "append"
-    chunk_df.write.format("delta").mode(mode).saveAsTable(f"{CATALOG}.silver.silver_outreach_event")
+    chunk_df.write.format("delta").mode(mode).saveAsTable(f"{CATALOG}.stars_silver.silver_outreach_event")
 
-total = spark.table(f"{CATALOG}.silver.silver_outreach_event").count()
+total = spark.table(f"{CATALOG}.stars_silver.silver_outreach_event").count()
 print(f"silver_outreach_event: {total:,} rows")
 
 # COMMAND ----------
 # --- silver_call_event ---
-bronze_calls = spark.table(f"{CATALOG}.bronze.bronze_call_center_raw")
+bronze_calls = spark.table(f"{CATALOG}.stars_bronze.bronze_call_center_raw")
 silver_calls = (
     bronze_calls
     .join(member_map, "member_id", "left")
@@ -119,5 +119,5 @@ silver_calls = (
         "sentiment_score", "agent_id", "queue_name", "measure_code",
     )
 )
-silver_calls.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.silver.silver_call_event")
+silver_calls.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_silver.silver_call_event")
 print(f"silver_call_event: {silver_calls.count():,} rows")

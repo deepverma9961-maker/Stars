@@ -42,7 +42,7 @@
         "min_retry_interval_millis": 60000,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars",
+            "catalog": "aiagneticdemo",
             "n_members": "100000",
             "seed": "42"
           },
@@ -62,7 +62,7 @@
         "min_retry_interval_millis": 60000,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars",
+            "catalog": "aiagneticdemo",
             "seed": "42"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/bronze/02_bronze_claims",
@@ -81,7 +81,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars",
+            "catalog": "aiagneticdemo",
             "seed": "42"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/bronze/03_bronze_pharmacy",
@@ -100,7 +100,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars",
+            "catalog": "aiagneticdemo",
             "seed": "42"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/bronze/04_bronze_cahps",
@@ -119,7 +119,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars",
+            "catalog": "aiagneticdemo",
             "seed": "42"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/bronze/05_bronze_call_center",
@@ -143,7 +143,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars"
+            "catalog": "aiagneticdemo"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/silver/06_silver_member_plan",
           "source": "WORKSPACE"
@@ -166,7 +166,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars"
+            "catalog": "aiagneticdemo"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/silver/07_silver_measure_cahps",
           "source": "WORKSPACE"
@@ -198,7 +198,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars"
+            "catalog": "aiagneticdemo"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/silver/08_silver_clinical_events",
           "source": "WORKSPACE"
@@ -224,7 +224,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars",
+            "catalog": "aiagneticdemo",
             "measurement_year": "2025"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/gold/09_gold_star_ratings",
@@ -251,7 +251,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars"
+            "catalog": "aiagneticdemo"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/gold/10_gold_measure_scorecard",
           "source": "WORKSPACE"
@@ -277,7 +277,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars"
+            "catalog": "aiagneticdemo"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/gold/11_gold_member_gaps",
           "source": "WORKSPACE"
@@ -303,7 +303,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars"
+            "catalog": "aiagneticdemo"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/gold/12_gold_cahps_teamview",
           "source": "WORKSPACE"
@@ -329,7 +329,7 @@
         "min_retry_interval_millis": 0,
         "notebook_task": {
           "base_parameters": {
-            "catalog": "medicare_stars"
+            "catalog": "aiagneticdemo"
           },
           "notebook_path": "/Workspace/stars-app/notebooks/gold/13_gold_campaigns_alerts",
           "source": "WORKSPACE"

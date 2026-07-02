@@ -77,10 +77,10 @@ def get_member_gaps(
 
         count_rows = query(f"""
             SELECT COUNT(*) AS total
-            FROM medicare_stars.gold.gold_member_gap g
-            JOIN medicare_stars.silver.silver_member m ON g.member_key = m.member_key
-            JOIN medicare_stars.silver.silver_measure ms ON g.measure_key = ms.measure_key
-            JOIN medicare_stars.silver.silver_plan p ON g.plan_key = p.plan_key
+            FROM aiagneticdemo.stars_gold.gold_member_gap g
+            JOIN aiagneticdemo.stars_silver.silver_member m ON g.member_key = m.member_key
+            JOIN aiagneticdemo.stars_silver.silver_measure ms ON g.measure_key = ms.measure_key
+            JOIN aiagneticdemo.stars_silver.silver_plan p ON g.plan_key = p.plan_key
             WHERE {where}
         """)
         total = count_rows[0]["total"] if count_rows else 847
@@ -92,10 +92,10 @@ def get_member_gaps(
                         ELSE CAST(DATEDIFF(CURRENT_DATE, g.last_outreach_date) AS STRING) || ' days ago'
                    END AS last_contact,
                    g.recommended_channel, 'Dr. Smith, J.' AS pcp_name, g.campaign_name
-            FROM medicare_stars.gold.gold_member_gap g
-            JOIN medicare_stars.silver.silver_member m ON g.member_key = m.member_key
-            JOIN medicare_stars.silver.silver_measure ms ON g.measure_key = ms.measure_key
-            JOIN medicare_stars.silver.silver_plan p ON g.plan_key = p.plan_key
+            FROM aiagneticdemo.stars_gold.gold_member_gap g
+            JOIN aiagneticdemo.stars_silver.silver_member m ON g.member_key = m.member_key
+            JOIN aiagneticdemo.stars_silver.silver_measure ms ON g.measure_key = ms.measure_key
+            JOIN aiagneticdemo.stars_silver.silver_plan p ON g.plan_key = p.plan_key
             WHERE {where}
             ORDER BY g.propensity_score DESC
             LIMIT {page_size} OFFSET {offset}

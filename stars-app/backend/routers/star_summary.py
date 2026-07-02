@@ -25,8 +25,8 @@ def get_star_summary():
                 SUM(p.enrollment_count) AS total_enrollment,
                 SUM(CASE WHEN s.projected_star_rating >= 4.0 THEN 1 ELSE 0 END) AS above_4star_count,
                 ROUND(AVG(s.projected_star_rating), 1) AS avg_star_rating
-            FROM medicare_stars.gold.gold_star_rating_summary s
-            JOIN medicare_stars.silver.silver_plan p ON s.plan_key = p.plan_key
+            FROM aiagneticdemo.stars_gold.gold_star_rating_summary s
+            JOIN aiagneticdemo.stars_silver.silver_plan p ON s.plan_key = p.plan_key
             WHERE s.measurement_year = 2025
             """
         )

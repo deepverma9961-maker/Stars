@@ -6,7 +6,7 @@
 
 # COMMAND ----------
 dbutils.widgets.text("seed", "42")
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 
 SEED = int(dbutils.widgets.get("seed"))
 CATALOG = dbutils.widgets.get("catalog")
@@ -88,8 +88,8 @@ CHUNK = 200_000
 for i in range(0, len(rows), CHUNK):
     chunk_df = spark.createDataFrame(rows[i:i + CHUNK])
     mode = "overwrite" if i == 0 else "append"
-    chunk_df.write.format("delta").mode(mode).saveAsTable(f"{CATALOG}.bronze.bronze_claims_raw")
+    chunk_df.write.format("delta").mode(mode).saveAsTable(f"{CATALOG}.stars_bronze.bronze_claims_raw")
     print(f"Written chunk {i//CHUNK + 1}: {i+len(rows[i:i+CHUNK]):,} rows total")
 
-total = spark.table(f"{CATALOG}.bronze.bronze_claims_raw").count()
+total = spark.table(f"{CATALOG}.stars_bronze.bronze_claims_raw").count()
 print(f"Total rows in bronze_claims_raw: {total:,}")

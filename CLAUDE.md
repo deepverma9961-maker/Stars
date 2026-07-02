@@ -98,9 +98,10 @@ The live frontend is `stars_v2.html` — a **single self-contained HTML file** w
 - `DATABRICKS_HOST` — workspace URL
 - `DATABRICKS_HTTP_PATH` — SQL warehouse path
 - `DATABRICKS_TOKEN` — PAT token
-- `CATALOG` — `medicare_stars`
-- `SCHEMA_GOLD` — `gold`
-- `SCHEMA_SILVER` — `silver`
+- `CATALOG` — `aiagneticdemo`
+- `SCHEMA_GOLD` — `stars_gold`
+- `SCHEMA_SILVER` — `stars_silver`
+- `SCHEMA_BRONZE` — `stars_bronze`
 
 ---
 

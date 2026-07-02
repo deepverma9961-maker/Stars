@@ -146,7 +146,7 @@ function coverPage() {
         ["Author", "StarPulse Engineering Team"],
         ["Approved By", "VP, Health Analytics & AI"],
         ["Live URL", "https://stars-pulse-1356475297832733.aws.databricksapps.com"],
-        ["Databricks Workspace", "medicare_stars (Unity Catalog)"],
+        ["Databricks Workspace", "aiagneticdemo (Unity Catalog)"],
       ],
       [3000, 6360]
     ),
@@ -258,7 +258,7 @@ function section2() {
       [
         ["Compute Runtime", "Databricks Runtime", "14.3.x-scala2.12 (Spark 3.5.0)"],
         ["Storage", "Delta Lake", "Unity Catalog managed tables, ACID transactions"],
-        ["Catalog", "Unity Catalog", "medicare_stars catalog, 4 schemas (bronze/silver/gold/gold_b)"],
+        ["Catalog", "Unity Catalog", "aiagneticdemo catalog, 3 schemas (stars_bronze/stars_silver/stars_gold)"],
         ["SQL Engine", "Databricks SQL Warehouse", "Serverless, auto-scaling, Photon-accelerated"],
         ["Orchestration", "Databricks Workflows", "Daily 6:00 AM ET, 14-task DAG, auto-retry"],
         ["API Framework", "FastAPI", "0.111.0 with Pydantic v2 validation"],
@@ -275,14 +275,13 @@ function section2() {
     spacer(80),
 
     h2("2.4 Catalog & Schema Organization"),
-    p("All platform data resides in the medicare_stars Unity Catalog with the following schema structure:"),
+    p("All platform data resides in the aiagneticdemo Unity Catalog with the following schema structure:"),
     makeTable(
       ["Schema", "Purpose", "Table Count", "Total Rows"],
       [
-        ["bronze", "Raw ingestion layer - source fidelity preserved", "5", "~3.3M"],
-        ["silver", "Curated layer - PII hashed, typed, enriched", "9", "~3.5M"],
-        ["gold", "Analytics layer - pre-aggregated, dashboard-ready", "12", "~280K"],
-        ["gold_b", "CMS market reference data (external)", "3", "~2K"],
+        ["stars_bronze", "Raw ingestion layer - source fidelity preserved (includes CMS reference lookups)", "5+", "~3.3M"],
+        ["stars_silver", "Curated layer - PII hashed, typed, enriched", "9", "~3.5M"],
+        ["stars_gold", "Analytics layer - pre-aggregated, dashboard-ready (includes CMS market reference)", "15", "~282K"],
       ],
       [1500, 4000, 1600, 2260]
     ),
@@ -304,7 +303,7 @@ function section2() {
         ["team_view", "GET /api/team-view", "gold_team_view"],
         ["simulator", "POST /api/simulator/run", "gold_measure_scorecard (context)"],
         ["hos", "GET /api/hos/measures, /members, /providers, /summary", "gold_hos_* (4 tables)"],
-        ["market", "GET /api/market/enrollment, /plan-stars, /measure-stars", "gold_b.cms_* (3 tables)"],
+        ["market", "GET /api/market/enrollment, /plan-stars, /measure-stars", "stars_gold.cms_* (3 tables)"],
         ["outreach", "POST /api/outreach/send-bundle", "N/A (Twilio/SendGrid)"],
       ],
       [1800, 3800, 3760]
@@ -827,7 +826,7 @@ function section3() {
     bulletBold("gold_hos_provider_scorecard (~1,000 rows)", "Provider-level gap counts per HOS measure for targeted provider engagement"),
     spacer(40),
 
-    h2("3.5 Market Reference Tables (gold_b schema)"),
+    h2("3.5 Market Reference Tables (stars_gold schema)"),
     p("Three tables provide CMS public dataset benchmarks for competitive market analysis:"),
     bulletBold("cms_plan_enrollment_history", "Historical enrollment by contract and year (2021-2025)"),
     bulletBold("cms_plan_star_history", "Historical overall star ratings with organization and state"),
@@ -1330,8 +1329,8 @@ function section9() {
 
     h2("9.3 Unity Catalog Governance"),
     p("Three-level namespace provides granular access control:"),
-    bulletBold("Catalog Level", "medicare_stars - single catalog containing all platform data"),
-    bulletBold("Schema Level", "bronze (raw), silver (curated), gold (analytics), gold_b (reference) - schema-level grants control read/write access"),
+    bulletBold("Catalog Level", "aiagneticdemo - single catalog containing all platform data"),
+    bulletBold("Schema Level", "stars_bronze (raw), stars_silver (curated), stars_gold (analytics + CMS reference) - schema-level grants control read/write access"),
     bulletBold("Table Level", "Individual table grants for sensitive objects (e.g., silver_member restricted to Data Engineering role)"),
     bullet("Data lineage automatically tracked across all medallion transformations"),
     bullet("Audit logs capture all data access events with user identity, timestamp, and query text"),
@@ -1522,7 +1521,7 @@ function section11() {
       "  ~120K responses             (top-box computed)           gold_hos_members (~14K)",
       "                             silver_measure (45)           gold_hos_provider (1K)",
       "bronze_call_center_raw  -->  silver_outreach_event (~120K)",
-      "  375K calls                 silver_call_event (~375K)     MARKET REF (gold_b)",
+      "  375K calls                 silver_call_event (~375K)     MARKET REF (stars_gold)",
       "                                                           cms_plan_enrollment",
       "                                                           cms_plan_star_history",
       "TOTAL: 3.3M rows            TOTAL: 3.6M+ rows             cms_measure_star_hist",
@@ -1871,9 +1870,10 @@ function section14() {
         ["DATABRICKS_HOST", "Workspace URL", "https://<workspace>.cloud.databricks.com"],
         ["DATABRICKS_HTTP_PATH", "SQL Warehouse path", "/sql/1.0/warehouses/<id>"],
         ["DATABRICKS_TOKEN", "Personal access token", "dapi***"],
-        ["CATALOG", "Unity Catalog name", "medicare_stars"],
-        ["SCHEMA_GOLD", "Gold schema name", "gold"],
-        ["SCHEMA_SILVER", "Silver schema name", "silver"],
+        ["CATALOG", "Unity Catalog name", "aiagneticdemo"],
+        ["SCHEMA_GOLD", "Gold schema name", "stars_gold"],
+        ["SCHEMA_SILVER", "Silver schema name", "stars_silver"],
+        ["SCHEMA_BRONZE", "Bronze schema name", "stars_bronze"],
         ["TWILIO_ACCOUNT_SID", "Twilio account", "AC***"],
         ["TWILIO_AUTH_TOKEN", "Twilio auth token", "***"],
         ["TWILIO_FROM_NUMBER", "SMS sender number", "+1***"],

@@ -56,7 +56,7 @@ function cover() {
       ["Classification", "Confidential - Internal Use"],
       ["Scope", "Architecture + ML + GenAI Reference"],
       ["Live URL", "https://stars-pulse-1356475297832733.aws.databricksapps.com"],
-      ["Catalog", "medicare_stars (Unity Catalog)"],
+      ["Catalog", "aiagneticdemo (Unity Catalog)"],
     ], [3000, 6360]),
     pb(),
   ];
@@ -113,7 +113,7 @@ function archSection() {
       [
         ["Compute", "Databricks Runtime 14.3", "Spark 3.5.0, Scala 2.12, m5d.large x 2 workers"],
         ["Storage", "Delta Lake", "ACID transactions, time travel, Unity Catalog managed"],
-        ["Catalog", "Unity Catalog", "medicare_stars: bronze / silver / gold / gold_b schemas"],
+        ["Catalog", "Unity Catalog", "aiagneticdemo: stars_bronze / stars_silver / stars_gold schemas"],
         ["SQL Engine", "SQL Warehouse", "Serverless, Photon-accelerated, auto-scaling"],
         ["Orchestration", "Databricks Workflows", "14-task DAG, daily 6:00 AM ET, auto-retry"],
         ["API", "FastAPI 0.111 + Uvicorn 0.29", "13 routers, 18 endpoints, Pydantic v2"],
@@ -146,7 +146,7 @@ function archSection() {
       "                             silver_measure (45)           gold_hos_members (~14K)",
       "bronze_call_center_raw  -->  silver_outreach_event (~120K) gold_hos_provider (1K)",
       "  375K calls                 silver_call_event (~375K)",
-      "                                                           MARKET REF (gold_b)",
+      "                                                           MARKET REF (stars_gold)",
       "TOTAL: 3.3M rows            TOTAL: 3.6M+ rows             cms_plan_enrollment",
       "                                                           cms_plan_star_history",
       "                                                           cms_measure_star_hist",
@@ -166,7 +166,7 @@ function archSection() {
         ["alerts", "GET /api/alerts", "gold_alert_priority"],
         ["simulator", "POST /api/simulator/run", "gold_measure_scorecard"],
         ["hos", "GET /api/hos/measures, /members, /providers", "gold_hos_* (4 tables)"],
-        ["market", "GET /api/market/enrollment, /plan-stars", "gold_b.cms_* (3 tables)"],
+        ["market", "GET /api/market/enrollment, /plan-stars", "stars_gold.cms_* (3 tables)"],
         ["outreach", "POST /api/outreach/send-bundle", "Twilio + SendGrid"],
       ],
       [1800, 3600, 3960]

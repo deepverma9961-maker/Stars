@@ -11,7 +11,7 @@ from functools import lru_cache
 from ..db import query, table_exists
 from ..config import settings
 
-_TABLE = "medicare_stars.gold.gold_member_closure_propensity"
+_TABLE = "aiagneticdemo.stars_gold.gold_member_closure_propensity"
 
 # Static fallback (mirrors simulator_engine.py constants)
 _FALLBACK_RATES = {

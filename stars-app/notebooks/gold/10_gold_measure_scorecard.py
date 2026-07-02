@@ -6,7 +6,7 @@
 # MAGIC H3312 values match stars_v2.html `hedisData` exactly.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -57,8 +57,8 @@ def status_from_rate(rate, four_star):
     return "red"
 
 # COMMAND ----------
-plans = spark.table(f"{CATALOG}.silver.silver_plan").collect()
-measures = spark.table(f"{CATALOG}.silver.silver_measure").collect()
+plans = spark.table(f"{CATALOG}.stars_silver.silver_plan").collect()
+measures = spark.table(f"{CATALOG}.stars_silver.silver_measure").collect()
 plan_map = {r.contract_id: r.plan_key for r in plans if not r.contract_id.endswith("B")}
 
 # Star-level offsets per contract for variation
@@ -134,5 +134,5 @@ _schema = StructType([
     StructField("projected_rate",   DoubleType(),  True),
     StructField("last_updated",     StringType(),  True),
 ])
-spark.createDataFrame(rows, _schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.gold.gold_measure_scorecard")
+spark.createDataFrame(rows, _schema).write.format("delta").mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{CATALOG}.stars_gold.gold_measure_scorecard")
 print(f"gold_measure_scorecard: {len(rows)} rows")

@@ -13,7 +13,7 @@
 # MAGIC set; this notebook only replaces one column).
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -35,7 +35,7 @@ spark = SparkSession.builder.getOrCreate()
 # MAGIC ## 1. Pull current HOS member roster and member-level features
 
 # COMMAND ----------
-hos_members = spark.table(f"{CATALOG}.gold.gold_hos_members").filter(
+hos_members = spark.table(f"{CATALOG}.stars_gold.gold_hos_members").filter(
     F.col("measurement_year") == YEAR
 ).toPandas()
 print(f"HOS members: {len(hos_members):,}")
@@ -61,7 +61,7 @@ hos_members["months_since_visit"] = hos_members["last_provider_visit"].apply(_mo
 # Fall history severity proxy from claims (W00-W19 in last 24 months)
 member_ids = hos_members["member_id"].dropna().unique().tolist()
 if member_ids:
-    claims = spark.table(f"{CATALOG}.silver.silver_claim").filter(
+    claims = spark.table(f"{CATALOG}.stars_silver.silver_claim").filter(
         F.col("member_id").isin(member_ids) &
         F.col("icd10_primary").rlike("^W(0[0-9]|1[0-9])")
     ).groupBy("member_id").agg(F.count("*").alias("fall_history_severity")).toPandas()
@@ -153,7 +153,7 @@ update_df = hos_members[["member_key", "urgency_score_new", "risk_level_new", "h
 spark.createDataFrame(update_df).createOrReplaceTempView("hos_urgency_update")
 
 spark.sql(f"""
-    MERGE INTO {CATALOG}.gold.gold_hos_members h
+    MERGE INTO {CATALOG}.stars_gold.gold_hos_members h
     USING hos_urgency_update u
       ON h.member_key = u.member_key
     WHEN MATCHED THEN UPDATE SET

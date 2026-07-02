@@ -13,7 +13,7 @@
 # MAGIC the actual recorded outcome of historical outreach events. No synthetic labels.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "medicare_stars")
+dbutils.widgets.text("catalog", "aiagneticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -37,12 +37,12 @@ spark = SparkSession.builder.getOrCreate()
 
 # COMMAND ----------
 # Member features
-member = spark.table(f"{CATALOG}.silver.silver_member").select(
+member = spark.table(f"{CATALOG}.stars_silver.silver_member").select(
     "member_key", "member_id", "age", "utilization_segment", "dual_eligible_flag", "lis_flag"
 )
 
 # Comorbidity count from clinical events
-claims = spark.table(f"{CATALOG}.silver.silver_claim")
+claims = spark.table(f"{CATALOG}.stars_silver.silver_claim")
 comorbid = (
     claims.filter(F.col("icd10_primary").isNotNull())
           .groupBy("member_key")
@@ -58,7 +58,7 @@ awv = (
 )
 
 # Outreach history
-outreach = spark.table(f"{CATALOG}.silver.silver_outreach_event")
+outreach = spark.table(f"{CATALOG}.stars_silver.silver_outreach_event")
 outreach_hist = (
     outreach.groupBy("member_key")
             .agg(
@@ -68,7 +68,7 @@ outreach_hist = (
 )
 
 # Gap features (current)
-gaps = spark.table(f"{CATALOG}.gold.gold_member_gap").filter(F.col("measurement_year") == YEAR).select(
+gaps = spark.table(f"{CATALOG}.stars_gold.gold_member_gap").filter(F.col("measurement_year") == YEAR).select(
     "member_key", "measure_code", "gap_status", "days_open"
 )
 
@@ -237,7 +237,7 @@ prop_schema = StructType([
 spark.createDataFrame(prop_out, schema=prop_schema) \
      .write.format("delta").mode("overwrite") \
      .partitionBy("measurement_year") \
-     .saveAsTable(f"{CATALOG}.gold.gold_member_closure_propensity")
+     .saveAsTable(f"{CATALOG}.stars_gold.gold_member_closure_propensity")
 print(f"gold_member_closure_propensity: {len(prop_out):,} rows")
 
 # COMMAND ----------
@@ -257,7 +257,7 @@ best["propensity_score_new"] = (best["best_p_close"] * 100).round(1)
 spark.createDataFrame(best).createOrReplaceTempView("best_propensity")
 
 spark.sql(f"""
-    MERGE INTO {CATALOG}.gold.gold_member_gap g
+    MERGE INTO {CATALOG}.stars_gold.gold_member_gap g
     USING best_propensity b
       ON g.member_key = b.member_key AND g.measure_code = b.measure_code
     WHEN MATCHED THEN UPDATE SET g.propensity_score = b.propensity_score_new
