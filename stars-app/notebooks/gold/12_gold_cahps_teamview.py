@@ -5,7 +5,7 @@
 # MAGIC Creates `gold_cahps_overview` (28 rows) and `gold_team_view` (6 departments × ~7 rows).
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 

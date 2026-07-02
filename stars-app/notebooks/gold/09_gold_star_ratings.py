@@ -5,7 +5,7 @@
 # MAGIC Creates `gold_star_rating_summary` — one row per plan with overall star ratings.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 dbutils.widgets.text("measurement_year", "2025")
 
 CATALOG = dbutils.widgets.get("catalog")

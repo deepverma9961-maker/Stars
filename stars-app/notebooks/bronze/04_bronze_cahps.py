@@ -6,7 +6,7 @@
 
 # COMMAND ----------
 dbutils.widgets.text("seed", "42")
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 
 SEED = int(dbutils.widgets.get("seed"))
 CATALOG = dbutils.widgets.get("catalog")

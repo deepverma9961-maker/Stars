@@ -6,7 +6,7 @@
 # MAGIC All PII (MBI, phone, email) is SHA-256 hashed. `display_name` is first name + last initial only.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 
 # COMMAND ----------

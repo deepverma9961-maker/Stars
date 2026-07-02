@@ -61,11 +61,11 @@ def get_plans(
                    COALESCE(s.partd_domain_rating, 0.0) AS partd_rating,
                    GREATEST(0, COALESCE(4.0 - s.projected_star_rating, 4.0)) AS star_gap_to_4,
                    COALESCE(s.bonus_eligible_flag, false) AS bonus_eligible
-            FROM aiagneticdemo.stars_silver.silver_plan p
+            FROM aiagenticdemo.stars_silver.silver_plan p
             LEFT JOIN (
-                SELECT * FROM aiagneticdemo.stars_gold.gold_star_rating_summary
+                SELECT * FROM aiagenticdemo.stars_gold.gold_star_rating_summary
                 WHERE measurement_year = (
-                    SELECT MAX(measurement_year) FROM aiagneticdemo.stars_gold.gold_star_rating_summary
+                    SELECT MAX(measurement_year) FROM aiagenticdemo.stars_gold.gold_star_rating_summary
                 )
             ) s ON s.plan_key = p.plan_key
             ORDER BY p.enrollment_count DESC

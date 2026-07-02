@@ -6,7 +6,7 @@
 # MAGIC `silver_outreach_event`, `silver_call_event` from bronze sources.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 
 # COMMAND ----------

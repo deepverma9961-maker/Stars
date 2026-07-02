@@ -5,7 +5,7 @@
 # MAGIC Creates `silver_measure` (45 measures) and `silver_cahps_response` (12k top-box flagged).
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 
 # COMMAND ----------

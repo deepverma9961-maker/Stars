@@ -9,7 +9,7 @@
 # MAGIC - `gold_hos_provider_scorecard` — provider-level gap counts per measure
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 

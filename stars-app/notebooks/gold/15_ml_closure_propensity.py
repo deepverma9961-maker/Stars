@@ -13,7 +13,7 @@
 # MAGIC the actual recorded outcome of historical outreach events. No synthetic labels.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 

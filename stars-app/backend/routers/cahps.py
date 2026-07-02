@@ -88,8 +88,8 @@ def get_cahps(contract_id: str = Query("H3312")):
                    c.projected_cahps_rating AS projected_rating,
                    GREATEST(0, 4.0 - c.projected_cahps_rating) AS gap_to_4_star,
                    c.days_remaining, c.qbp_at_stake_amount AS qbp_at_stake
-            FROM aiagneticdemo.stars_gold.gold_cahps_overview c
-            JOIN aiagneticdemo.stars_silver.silver_plan p ON c.plan_key = p.plan_key
+            FROM aiagenticdemo.stars_gold.gold_cahps_overview c
+            JOIN aiagenticdemo.stars_silver.silver_plan p ON c.plan_key = p.plan_key
             WHERE c.measurement_year = 2025 AND p.contract_id = '{contract_id}'
             LIMIT 1
             """
@@ -104,9 +104,9 @@ def get_cahps(contract_id: str = Query("H3312")):
                    sc.current_rate AS current_pct,
                    CASE WHEN sc.current_rate >= 80 THEN 'ok'
                         WHEN sc.current_rate >= 70 THEN 'risk' ELSE 'crit' END AS status
-            FROM aiagneticdemo.stars_gold.gold_measure_scorecard sc
-            JOIN aiagneticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
-            JOIN aiagneticdemo.stars_silver.silver_plan p ON sc.plan_key = p.plan_key
+            FROM aiagenticdemo.stars_gold.gold_measure_scorecard sc
+            JOIN aiagenticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
+            JOIN aiagenticdemo.stars_silver.silver_plan p ON sc.plan_key = p.plan_key
             WHERE sc.measurement_year = 2025
               AND p.contract_id = '{contract_id}'
               AND ms.measure_category = 'CAHPS'
@@ -126,16 +126,16 @@ def get_cahps_pulse(contract_id: str = Query("H3312")):
             SELECT cr.composite_code,
                    COUNT(DISTINCT cr.member_id)                        AS responded,
                    ROUND(AVG(CAST(cr.top_box_flag AS DOUBLE))*100, 1) AS top_box_pct
-            FROM aiagneticdemo.stars_silver.silver_cahps_response cr
+            FROM aiagenticdemo.stars_silver.silver_cahps_response cr
             GROUP BY cr.composite_code
         """)
         resp_map = {r["composite_code"]: r for r in (resp_rows or [])}
 
         score_rows = query(f"""
             SELECT ms.measure_code, sc.current_rate
-            FROM aiagneticdemo.stars_gold.gold_measure_scorecard sc
-            JOIN aiagneticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
-            JOIN aiagneticdemo.stars_silver.silver_plan p      ON sc.plan_key  = p.plan_key
+            FROM aiagenticdemo.stars_gold.gold_measure_scorecard sc
+            JOIN aiagenticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
+            JOIN aiagenticdemo.stars_silver.silver_plan p      ON sc.plan_key  = p.plan_key
             WHERE sc.measurement_year = 2025
               AND p.contract_id = '{contract_id}'
               AND ms.measure_category = 'CAHPS'

@@ -146,7 +146,7 @@ function coverPage() {
         ["Author", "StarPulse Engineering Team"],
         ["Approved By", "VP, Health Analytics & AI"],
         ["Live URL", "https://stars-pulse-1356475297832733.aws.databricksapps.com"],
-        ["Databricks Workspace", "aiagneticdemo (Unity Catalog)"],
+        ["Databricks Workspace", "aiagenticdemo (Unity Catalog)"],
       ],
       [3000, 6360]
     ),
@@ -258,7 +258,7 @@ function section2() {
       [
         ["Compute Runtime", "Databricks Runtime", "14.3.x-scala2.12 (Spark 3.5.0)"],
         ["Storage", "Delta Lake", "Unity Catalog managed tables, ACID transactions"],
-        ["Catalog", "Unity Catalog", "aiagneticdemo catalog, 3 schemas (stars_bronze/stars_silver/stars_gold)"],
+        ["Catalog", "Unity Catalog", "aiagenticdemo catalog, 3 schemas (stars_bronze/stars_silver/stars_gold)"],
         ["SQL Engine", "Databricks SQL Warehouse", "Serverless, auto-scaling, Photon-accelerated"],
         ["Orchestration", "Databricks Workflows", "Daily 6:00 AM ET, 14-task DAG, auto-retry"],
         ["API Framework", "FastAPI", "0.111.0 with Pydantic v2 validation"],
@@ -275,7 +275,7 @@ function section2() {
     spacer(80),
 
     h2("2.4 Catalog & Schema Organization"),
-    p("All platform data resides in the aiagneticdemo Unity Catalog with the following schema structure:"),
+    p("All platform data resides in the aiagenticdemo Unity Catalog with the following schema structure:"),
     makeTable(
       ["Schema", "Purpose", "Table Count", "Total Rows"],
       [
@@ -1329,7 +1329,7 @@ function section9() {
 
     h2("9.3 Unity Catalog Governance"),
     p("Three-level namespace provides granular access control:"),
-    bulletBold("Catalog Level", "aiagneticdemo - single catalog containing all platform data"),
+    bulletBold("Catalog Level", "aiagenticdemo - single catalog containing all platform data"),
     bulletBold("Schema Level", "stars_bronze (raw), stars_silver (curated), stars_gold (analytics + CMS reference) - schema-level grants control read/write access"),
     bulletBold("Table Level", "Individual table grants for sensitive objects (e.g., silver_member restricted to Data Engineering role)"),
     bullet("Data lineage automatically tracked across all medallion transformations"),
@@ -1870,7 +1870,7 @@ function section14() {
         ["DATABRICKS_HOST", "Workspace URL", "https://<workspace>.cloud.databricks.com"],
         ["DATABRICKS_HTTP_PATH", "SQL Warehouse path", "/sql/1.0/warehouses/<id>"],
         ["DATABRICKS_TOKEN", "Personal access token", "dapi***"],
-        ["CATALOG", "Unity Catalog name", "aiagneticdemo"],
+        ["CATALOG", "Unity Catalog name", "aiagenticdemo"],
         ["SCHEMA_GOLD", "Gold schema name", "stars_gold"],
         ["SCHEMA_SILVER", "Silver schema name", "stars_silver"],
         ["SCHEMA_BRONZE", "Bronze schema name", "stars_bronze"],

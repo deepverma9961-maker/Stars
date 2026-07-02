@@ -34,7 +34,7 @@ def get_campaigns(
                    CASE WHEN c.roi_multiplier IS NULL THEN '—'
                         ELSE CONCAT(CAST(ROUND(c.roi_multiplier,1) AS STRING), 'x') END AS roi_str,
                    c.campaign_status AS status
-            FROM aiagneticdemo.stars_gold.gold_campaign_performance c
+            FROM aiagenticdemo.stars_gold.gold_campaign_performance c
             WHERE {where}
             ORDER BY c.campaign_start_date DESC
             LIMIT 50

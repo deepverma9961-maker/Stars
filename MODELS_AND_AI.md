@@ -153,7 +153,7 @@ The seven factors and their weights are *displayed* on the HOS Urgency Engine pa
 
 **Location:** `stars-app/notebooks/gold/11_gold_member_gaps.py` (PySpark notebook)
 
-The notebook materialises `aiagneticdemo.stars_gold.gold_member_gap` with a per-member `propensity_score` and a `recommended_channel` / `recommended_incentive`. The current implementation uses:
+The notebook materialises `aiagenticdemo.stars_gold.gold_member_gap` with a per-member `propensity_score` and a `recommended_channel` / `recommended_incentive`. The current implementation uses:
 ```python
 propensity = round(r.uniform(20, 95), 1)
 gap_status = r.choices(['Open','Partial','Borderline'], weights=[55, 30, 15])[0]

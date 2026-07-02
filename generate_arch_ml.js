@@ -56,7 +56,7 @@ function cover() {
       ["Classification", "Confidential - Internal Use"],
       ["Scope", "Architecture + ML + GenAI Reference"],
       ["Live URL", "https://stars-pulse-1356475297832733.aws.databricksapps.com"],
-      ["Catalog", "aiagneticdemo (Unity Catalog)"],
+      ["Catalog", "aiagenticdemo (Unity Catalog)"],
     ], [3000, 6360]),
     pb(),
   ];
@@ -113,7 +113,7 @@ function archSection() {
       [
         ["Compute", "Databricks Runtime 14.3", "Spark 3.5.0, Scala 2.12, m5d.large x 2 workers"],
         ["Storage", "Delta Lake", "ACID transactions, time travel, Unity Catalog managed"],
-        ["Catalog", "Unity Catalog", "aiagneticdemo: stars_bronze / stars_silver / stars_gold schemas"],
+        ["Catalog", "Unity Catalog", "aiagenticdemo: stars_bronze / stars_silver / stars_gold schemas"],
         ["SQL Engine", "SQL Warehouse", "Serverless, Photon-accelerated, auto-scaling"],
         ["Orchestration", "Databricks Workflows", "14-task DAG, daily 6:00 AM ET, auto-retry"],
         ["API", "FastAPI 0.111 + Uvicorn 0.29", "13 routers, 18 endpoints, Pydantic v2"],

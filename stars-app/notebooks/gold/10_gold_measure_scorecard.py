@@ -6,7 +6,7 @@
 # MAGIC H3312 values match stars_v2.html `hedisData` exactly.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 

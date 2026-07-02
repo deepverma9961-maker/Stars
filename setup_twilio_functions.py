@@ -42,7 +42,7 @@ function logToDb(context, callSid, status, detail, memberSelection) {
     setClauses += ", member_selection = '" + esc(memberSelection) + "'";
   }
 
-  const sql = "UPDATE aiagneticdemo.stars_silver.outreach_activity_log SET " + setClauses + " WHERE provider_sid = '" + esc(callSid) + "'";
+  const sql = "UPDATE aiagenticdemo.stars_silver.outreach_activity_log SET " + setClauses + " WHERE provider_sid = '" + esc(callSid) + "'";
   const body = JSON.stringify({ warehouse_id: warehouse, statement: sql, wait_timeout: '10s' });
 
   const req = https.request({

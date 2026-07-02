@@ -5,7 +5,7 @@
 # MAGIC Creates `gold_campaign_performance`, `gold_alert_priority`, `gold_intervention_hub`.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 
@@ -105,7 +105,7 @@ print(f"gold_campaign_performance: {len(campaign_rows)} rows")
 # --- gold_alert_priority ---
 measures = spark.table(f"{CATALOG}.stars_silver.silver_measure").collect()
 scorecard = spark.table(f"{CATALOG}.stars_gold.gold_measure_scorecard").filter(
-    "measurement_year = 2025 AND plan_key IN (SELECT plan_key FROM aiagneticdemo.stars_silver.silver_plan WHERE contract_id = 'H3312')"
+    "measurement_year = 2025 AND plan_key IN (SELECT plan_key FROM aiagenticdemo.stars_silver.silver_plan WHERE contract_id = 'H3312')"
 ).collect()
 
 measure_map = {m.measure_key: m for m in measures}

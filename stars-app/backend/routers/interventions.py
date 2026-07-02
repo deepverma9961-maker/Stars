@@ -22,8 +22,8 @@ def get_interventions():
                    i.intervention_status AS status,
                    CAST(i.due_date AS STRING) AS due_date,
                    i.target_member_count AS member_count
-            FROM aiagneticdemo.stars_gold.gold_intervention_hub i
-            JOIN aiagneticdemo.stars_silver.silver_measure ms ON i.measure_key = ms.measure_key
+            FROM aiagenticdemo.stars_gold.gold_intervention_hub i
+            JOIN aiagenticdemo.stars_silver.silver_measure ms ON i.measure_key = ms.measure_key
             WHERE i.measurement_year = 2025
             ORDER BY i.expected_lift_pct DESC
             LIMIT 25

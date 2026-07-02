@@ -67,7 +67,7 @@ def connection_status():
     if not has_config:
         return {"connected": False, "source": "fallback", "reason": "missing_secrets", "ai_messaging": ai_messaging}
     try:
-        rows = query("SELECT COUNT(*) AS n FROM aiagneticdemo.stars_gold.gold_star_rating_summary WHERE measurement_year = 2025")
+        rows = query("SELECT COUNT(*) AS n FROM aiagenticdemo.stars_gold.gold_star_rating_summary WHERE measurement_year = 2025")
         count = rows[0]["n"] if rows else 0
         from .services import ml_propensity
         propensity_model = "live" if ml_propensity.is_live() else "fallback"

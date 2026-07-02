@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     databricks_host: str = ""
     databricks_http_path: str = ""
     databricks_token: str = ""
-    catalog: str = "aiagneticdemo"
+    catalog: str = "aiagenticdemo"
     schema_gold: str = "stars_gold"
     schema_silver: str = "stars_silver"
     schema_bronze: str = "stars_bronze"

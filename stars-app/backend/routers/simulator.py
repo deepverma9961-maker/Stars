@@ -25,9 +25,9 @@ def _get_measure_data(contract_id: str, measure_code: str | None) -> dict:
         if measure_code:
             rows = query(f"""
                 SELECT sc.current_rate, sc.open_gap_count, ms.measure_name
-                FROM aiagneticdemo.stars_gold.gold_measure_scorecard sc
-                JOIN aiagneticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
-                JOIN aiagneticdemo.stars_silver.silver_plan p ON sc.plan_key = p.plan_key
+                FROM aiagenticdemo.stars_gold.gold_measure_scorecard sc
+                JOIN aiagenticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
+                JOIN aiagenticdemo.stars_silver.silver_plan p ON sc.plan_key = p.plan_key
                 WHERE sc.measurement_year = 2025
                   AND p.contract_id = '{contract_id}'
                   AND ms.measure_code = '{measure_code}'
@@ -38,9 +38,9 @@ def _get_measure_data(contract_id: str, measure_code: str | None) -> dict:
                 SELECT AVG(sc.current_rate) AS current_rate,
                        SUM(sc.open_gap_count) AS open_gap_count,
                        'All HEDIS Measures' AS measure_name
-                FROM aiagneticdemo.stars_gold.gold_measure_scorecard sc
-                JOIN aiagneticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
-                JOIN aiagneticdemo.stars_silver.silver_plan p ON sc.plan_key = p.plan_key
+                FROM aiagenticdemo.stars_gold.gold_measure_scorecard sc
+                JOIN aiagenticdemo.stars_silver.silver_measure ms ON sc.measure_key = ms.measure_key
+                JOIN aiagenticdemo.stars_silver.silver_plan p ON sc.plan_key = p.plan_key
                 WHERE sc.measurement_year = 2025
                   AND p.contract_id = '{contract_id}'
                   AND ms.measure_category = 'HEDIS'

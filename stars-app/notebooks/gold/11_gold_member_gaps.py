@@ -6,7 +6,7 @@
 # MAGIC with propensity scores, recommended channel/incentive, outreach history.
 
 # COMMAND ----------
-dbutils.widgets.text("catalog", "aiagneticdemo")
+dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 YEAR = 2025
 

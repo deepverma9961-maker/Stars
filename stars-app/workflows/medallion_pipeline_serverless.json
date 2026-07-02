@@ -9,7 +9,7 @@
         "notebook_path": "/Workspace/stars-app/notebooks/bronze/01_bronze_enrollment",
         "base_parameters": {
           "seed": "42",
-          "catalog": "aiagneticdemo",
+          "catalog": "aiagenticdemo",
           "n_members": "100000"
         }
       },
@@ -25,7 +25,7 @@
         "notebook_path": "/Workspace/stars-app/notebooks/bronze/02_bronze_claims",
         "base_parameters": {
           "seed": "42",
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 3600,
@@ -40,7 +40,7 @@
         "notebook_path": "/Workspace/stars-app/notebooks/bronze/03_bronze_pharmacy",
         "base_parameters": {
           "seed": "42",
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 2400,
@@ -54,7 +54,7 @@
         "notebook_path": "/Workspace/stars-app/notebooks/bronze/04_bronze_cahps",
         "base_parameters": {
           "seed": "42",
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 900,
@@ -68,7 +68,7 @@
         "notebook_path": "/Workspace/stars-app/notebooks/bronze/05_bronze_call_center",
         "base_parameters": {
           "seed": "42",
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 1800,
@@ -86,7 +86,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/silver/06_silver_member_plan",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 2400,
@@ -104,7 +104,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/silver/07_silver_measure_cahps",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 1200,
@@ -128,7 +128,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/silver/08_silver_clinical_events",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 5400,
@@ -149,7 +149,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/gold/09_gold_star_ratings",
         "base_parameters": {
-          "catalog": "aiagneticdemo",
+          "catalog": "aiagenticdemo",
           "measurement_year": "2025"
         }
       },
@@ -171,7 +171,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/gold/10_gold_measure_scorecard",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 1800,
@@ -192,7 +192,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/gold/11_gold_member_gaps",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 3600,
@@ -213,7 +213,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/gold/12_gold_cahps_teamview",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 1200,
@@ -234,7 +234,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/gold/13_gold_campaigns_alerts",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 1800,
@@ -255,7 +255,7 @@
       "notebook_task": {
         "notebook_path": "/Workspace/stars-app/notebooks/gold/14_gold_hos",
         "base_parameters": {
-          "catalog": "aiagneticdemo"
+          "catalog": "aiagenticdemo"
         }
       },
       "timeout_seconds": 2400,
