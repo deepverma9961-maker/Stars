@@ -268,10 +268,10 @@
     .ma-plan-table td:nth-child(2),.ma-plan-table td:nth-child(3){text-align:left}
     .ma-plan-table tr:hover td{background:#fff8f5}
     .ma-star-cell{display:inline-block;padding:2px 8px;border-radius:20px;font-weight:700;font-size:11px}
-    .ma-star-good{background:transparent;color:#111}
-    .ma-star-ok{background:transparent;color:#111}
-    .ma-star-warn{background:transparent;color:#111}
-    .ma-star-bad{background:transparent;color:#111}
+    .ma-star-good{background:transparent;color:#16a34a}
+    .ma-star-ok{background:transparent;color:#16a34a}
+    .ma-star-warn{background:transparent;color:#dc2626}
+    .ma-star-bad{background:transparent;color:#dc2626}
     .ma-star-na{background:#f3f4f6;color:#9ca3af}
     .ma-yoy-up{color:#1D9E75;font-weight:600;font-size:10px}
     .ma-yoy-down{color:#dc2626;font-weight:600;font-size:10px}
@@ -4301,7 +4301,7 @@ let maOrgToContracts={};
 
 function ft(url,timeout){const ctrl=new AbortController();const t=timeout||15000;setTimeout(()=>ctrl.abort(),t);console.log('Market fetching:',url,'timeout='+t);return fetch(url,{signal:ctrl.signal}).then(r=>{console.log('Market response:',url,'status='+r.status);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(data=>{console.log('Market parsed:',url,'rows='+((data&&data.length)||0));return data;}).catch(e=>{console.error('Market fetch FAILED:',url,e.name,e.message);return[];});}
 
-function starClass(v){if(v>=4.5)return'ma-star-good';if(v>=4)return'ma-star-ok';if(v>=3.5)return'ma-star-warn';return'ma-star-bad';}
+function starClass(v){if(v>3)return'ma-star-good';return'ma-star-bad';}
 
 function yoyHtml(stars,years){
   const sorted=[...years].filter(y=>stars[y]!=null&&!isNaN(stars[y])).sort((a,b)=>b-a);
@@ -4760,6 +4760,7 @@ function maRenderMeasureTable(){
     // Two-row header: top row has plan spans, bottom row has year sub-columns
     let hRow1='<th rowspan="2" style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'domain\')">Domain'+sortIcon('domain')+'</th>';
     hRow1+='<th rowspan="2" style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'measure\')">Measure'+sortIcon('measure')+'</th>';
+    hRow1+='<th rowspan="2" style="text-align:center;cursor:pointer;user-select:none" onclick="maSortBy(\'weight\')">Wt'+sortIcon('weight')+'</th>';
     let hRow2='';
     contracts.forEach(function(cid,ci){
       hRow1+='<th colspan="'+years.length+'" style="text-align:center;background:'+(ci%2===0?'#f0f4ff':'#fef3e2')+';border-bottom:2px solid '+(ci%2===0?'#3b82f6':'#F26722')+';font-size:12px;font-weight:700;letter-spacing:.03em">'+cid+'</th>';
@@ -4770,12 +4771,13 @@ function maRenderMeasureTable(){
     thead.innerHTML='<tr>'+hRow1+'</tr><tr>'+hRow2+'</tr>';
 
     const tbody=document.getElementById('ma-measure-tbody');
-    const totalCols=2+contracts.length*years.length;
+    const totalCols=3+contracts.length*years.length;
     if(!slice.length){
       tbody.innerHTML='<tr><td colspan="'+totalCols+'" style="text-align:center;padding:20px;color:#9ca3af">No data matches filters</td></tr>';
     }else{
       tbody.innerHTML=slice.map(function(d){
-        let cells='<td>'+domBadge(d.domain)+'</td><td>'+d.measure+'</td>';
+        const wt=(d.weight!=null&&!isNaN(d.weight))?(d.weight+'x'):'—';
+        let cells='<td>'+domBadge(d.domain)+'</td><td>'+d.measure+'</td><td style="text-align:center;font-weight:600;color:#374151">'+wt+'</td>';
         contracts.forEach(function(cid){
           const planStars=d.plans[cid]||{};
           years.forEach(function(y){ cells+=starCell(planStars[y]); });
@@ -4785,7 +4787,7 @@ function maRenderMeasureTable(){
     }
   }else{
     // ── Single-plan / default flat layout ──
-    thead.innerHTML='<tr><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'domain\')">Domain'+sortIcon('domain')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'contract\')">Contract'+sortIcon('contract')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'measure\')">Measure'+sortIcon('measure')+'</th>'+years.map(y=>'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yr_'+y+'\')">'+y+sortIcon('yr_'+y)+'</th>').join('')+'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yoy\')">YOY Change'+sortIcon('yoy')+'</th></tr>';
+    thead.innerHTML='<tr><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'domain\')">Domain'+sortIcon('domain')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'contract\')">Contract'+sortIcon('contract')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'measure\')">Measure'+sortIcon('measure')+'</th><th style="text-align:center;cursor:pointer;user-select:none" onclick="maSortBy(\'weight\')">Wt'+sortIcon('weight')+'</th>'+years.map(y=>'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yr_'+y+'\')">'+y+sortIcon('yr_'+y)+'</th>').join('')+'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yoy\')">YOY Change'+sortIcon('yoy')+'</th></tr>';
 
     const pivotMap={};
     data.forEach(d=>{
@@ -4810,12 +4812,13 @@ function maRenderMeasureTable(){
     const slice=rows.slice((maPage-1)*MA_PAGE_SIZE,maPage*MA_PAGE_SIZE);
 
     const tbody=document.getElementById('ma-measure-tbody');
-    const colSpan=years.length+4;
+    const colSpan=years.length+5;
     if(!slice.length){tbody.innerHTML='<tr><td colspan="'+colSpan+'" style="text-align:center;padding:20px;color:#9ca3af">No data matches filters</td></tr>';
     }else{
       tbody.innerHTML=slice.map(d=>{
         const yrCells=years.map(y=>starCell(d.stars[y])).join('');
-        return'<tr><td>'+domBadge(d.domain)+'</td><td style="font-weight:600;color:#1d4ed8;font-size:11px">'+d.contract+'</td><td>'+d.measure+'</td>'+yrCells+'<td style="text-align:center">'+yoyHtml(d.stars,years)+'</td></tr>';
+        const wt=(d.weight!=null&&!isNaN(d.weight))?(d.weight+'x'):'—';
+        return'<tr><td>'+domBadge(d.domain)+'</td><td style="font-weight:600;color:#1d4ed8;font-size:11px">'+d.contract+'</td><td>'+d.measure+'</td><td style="text-align:center;font-weight:600;color:#374151">'+wt+'</td>'+yrCells+'<td style="text-align:center">'+yoyHtml(d.stars,years)+'</td></tr>';
       }).join('');
     }
   }
