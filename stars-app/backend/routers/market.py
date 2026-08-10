@@ -245,7 +245,13 @@ def market_measure_stars(contracts: str = ""):
     cid_list = [c.strip() for c in contracts.split(",") if c.strip()]
     if not cid_list:
         return []
-    placeholders = ",".join(f"'{c}'" for c in cid_list[:50])
+    # NOTE: previously truncated to 50 — anything past index 50 silently
+    # dropped, which combined with per-contract frontend caching caused
+    # affected contracts to permanently show as empty. Raised to 500;
+    # frontend chunks requests in groups <= 400.
+    placeholders = ",".join(f"'{c}'" for c in cid_list[:500])
+    if len(cid_list) > 500:
+        logger.warning("market_measure_stars: truncating %d contracts to 500", len(cid_list))
 
     try:
         # NOTE: stars_measurelist lookup removed — if that table is missing or

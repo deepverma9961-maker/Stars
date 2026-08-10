@@ -4325,11 +4325,17 @@ async function maFetchMeasures(cids){
   if(!cids.length)return[];
   const uncached=cids.filter(c=>!maMeasureCache[c]);
   if(uncached.length){
-    const param=uncached.join(',');
-    console.log('Market: fetching measures for '+uncached.length+' contracts...');
-    const measures=await ft('/api/market/measure-stars?contracts='+encodeURIComponent(param),60000);
-    console.log('Market: got '+measures.length+' measure rows');
-    const parsed=measures.map(d=>({contract:d.contract_id,contractName:d.plan_name||d.contract_id,orgName:d.org_name||d.plan_name||d.contract_id,state:d.state||'',year:parseInt(d.year),domain:d.domain,measure:d.measure_name,star:parseFloat(d.star_rating),weight:d.weight||1}));
+    // Chunk: backend truncates to 500; keep well under that so nothing is dropped.
+    const CHUNK=200;
+    let parsed=[];
+    for(let i=0;i<uncached.length;i+=CHUNK){
+      const chunk=uncached.slice(i,i+CHUNK);
+      const param=chunk.join(',');
+      console.log('Market: fetching measures for '+chunk.length+' contracts (chunk '+((i/CHUNK)+1)+'/'+Math.ceil(uncached.length/CHUNK)+')...');
+      const measures=await ft('/api/market/measure-stars?contracts='+encodeURIComponent(param),60000);
+      console.log('Market: got '+measures.length+' measure rows for chunk');
+      parsed=parsed.concat(measures.map(d=>({contract:d.contract_id,contractName:d.plan_name||d.contract_id,orgName:d.org_name||d.plan_name||d.contract_id,state:d.state||'',year:parseInt(d.year),domain:d.domain,measure:d.measure_name,star:parseFloat(d.star_rating),weight:d.weight||1})));
+    }
     uncached.forEach(c=>{maMeasureCache[c]=parsed.filter(d=>d.contract===c);});
   }
   let all=[];
