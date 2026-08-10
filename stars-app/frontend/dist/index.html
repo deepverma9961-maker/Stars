@@ -2512,7 +2512,7 @@ function setCFilter(f){
   const rows=document.querySelectorAll('#cahps-composite-rows [data-name]');
   rows.forEach(r=>{
     const s=r.dataset.status||'';
-    const show=f==='all'||(f==='green'&&s==='ok')||(f==='yellow'&&s==='risk')||(f==='red'&&s==='critical');
+    const show=f==='all'||(f==='green'&&s==='ok')||(f==='yellow'&&s==='risk')||(f==='red'&&(s==='crit'||s==='critical'));
     r.style.display=show?'grid':'none';
   });
 }
