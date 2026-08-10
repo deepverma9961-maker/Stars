@@ -4760,7 +4760,6 @@ function maRenderMeasureTable(){
     // Two-row header: top row has plan spans, bottom row has year sub-columns
     let hRow1='<th rowspan="2" style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'domain\')">Domain'+sortIcon('domain')+'</th>';
     hRow1+='<th rowspan="2" style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'measure\')">Measure'+sortIcon('measure')+'</th>';
-    hRow1+='<th rowspan="2" style="text-align:center;cursor:pointer;user-select:none" onclick="maSortBy(\'weight\')">Wt'+sortIcon('weight')+'</th>';
     let hRow2='';
     contracts.forEach(function(cid,ci){
       hRow1+='<th colspan="'+years.length+'" style="text-align:center;background:'+(ci%2===0?'#f0f4ff':'#fef3e2')+';border-bottom:2px solid '+(ci%2===0?'#3b82f6':'#F26722')+';font-size:12px;font-weight:700;letter-spacing:.03em">'+cid+'</th>';
@@ -4771,13 +4770,12 @@ function maRenderMeasureTable(){
     thead.innerHTML='<tr>'+hRow1+'</tr><tr>'+hRow2+'</tr>';
 
     const tbody=document.getElementById('ma-measure-tbody');
-    const totalCols=3+contracts.length*years.length;
+    const totalCols=2+contracts.length*years.length;
     if(!slice.length){
       tbody.innerHTML='<tr><td colspan="'+totalCols+'" style="text-align:center;padding:20px;color:#9ca3af">No data matches filters</td></tr>';
     }else{
       tbody.innerHTML=slice.map(function(d){
-        const wt=(d.weight!=null&&!isNaN(d.weight))?(d.weight+'x'):'—';
-        let cells='<td>'+domBadge(d.domain)+'</td><td>'+d.measure+'</td><td style="text-align:center;font-weight:600;color:#374151">'+wt+'</td>';
+        let cells='<td>'+domBadge(d.domain)+'</td><td>'+d.measure+'</td>';
         contracts.forEach(function(cid){
           const planStars=d.plans[cid]||{};
           years.forEach(function(y){ cells+=starCell(planStars[y]); });
@@ -4787,7 +4785,7 @@ function maRenderMeasureTable(){
     }
   }else{
     // ── Single-plan / default flat layout ──
-    thead.innerHTML='<tr><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'domain\')">Domain'+sortIcon('domain')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'contract\')">Contract'+sortIcon('contract')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'measure\')">Measure'+sortIcon('measure')+'</th><th style="text-align:center;cursor:pointer;user-select:none" onclick="maSortBy(\'weight\')">Wt'+sortIcon('weight')+'</th>'+years.map(y=>'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yr_'+y+'\')">'+y+sortIcon('yr_'+y)+'</th>').join('')+'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yoy\')">YOY Change'+sortIcon('yoy')+'</th></tr>';
+    thead.innerHTML='<tr><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'domain\')">Domain'+sortIcon('domain')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'contract\')">Contract'+sortIcon('contract')+'</th><th style="text-align:left;cursor:pointer;user-select:none" onclick="maSortBy(\'measure\')">Measure'+sortIcon('measure')+'</th>'+years.map(y=>'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yr_'+y+'\')">'+y+sortIcon('yr_'+y)+'</th>').join('')+'<th style="cursor:pointer;user-select:none" onclick="maSortBy(\'yoy\')">YOY Change'+sortIcon('yoy')+'</th></tr>';
 
     const pivotMap={};
     data.forEach(d=>{
@@ -4812,13 +4810,12 @@ function maRenderMeasureTable(){
     const slice=rows.slice((maPage-1)*MA_PAGE_SIZE,maPage*MA_PAGE_SIZE);
 
     const tbody=document.getElementById('ma-measure-tbody');
-    const colSpan=years.length+5;
+    const colSpan=years.length+4;
     if(!slice.length){tbody.innerHTML='<tr><td colspan="'+colSpan+'" style="text-align:center;padding:20px;color:#9ca3af">No data matches filters</td></tr>';
     }else{
       tbody.innerHTML=slice.map(d=>{
         const yrCells=years.map(y=>starCell(d.stars[y])).join('');
-        const wt=(d.weight!=null&&!isNaN(d.weight))?(d.weight+'x'):'—';
-        return'<tr><td>'+domBadge(d.domain)+'</td><td style="font-weight:600;color:#1d4ed8;font-size:11px">'+d.contract+'</td><td>'+d.measure+'</td><td style="text-align:center;font-weight:600;color:#374151">'+wt+'</td>'+yrCells+'<td style="text-align:center">'+yoyHtml(d.stars,years)+'</td></tr>';
+        return'<tr><td>'+domBadge(d.domain)+'</td><td style="font-weight:600;color:#1d4ed8;font-size:11px">'+d.contract+'</td><td>'+d.measure+'</td>'+yrCells+'<td style="text-align:center">'+yoyHtml(d.stars,years)+'</td></tr>';
       }).join('');
     }
   }

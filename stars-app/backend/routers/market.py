@@ -273,7 +273,7 @@ def market_measure_stars(contracts: str = ""):
                    END as domain,
                    m.measure_name,
                    CAST(m.star_rating AS DOUBLE) as star_rating,
-                   CAST(COALESCE(ml.Weightage, 1) AS INT) as weight
+                   1 as weight
             FROM {_CATALOG}.cms_measure_star_history m
             LEFT JOIN (SELECT contract_id,
                               SUBSTRING(contract_id, 1, 5) as cid_short,
@@ -281,9 +281,7 @@ def market_measure_stars(contracts: str = ""):
                               FIRST(org_name) as org_name, FIRST(state) as state
                        FROM {_CATALOG}.cms_plan_star_history GROUP BY contract_id) s
               ON SUBSTRING(m.contract_id, 1, 5) = s.cid_short
-            LEFT JOIN (SELECT LOWER(TRIM(Measure)) as measure_key,
-                              FIRST(TRIM(Category)) as Category,
-                              FIRST(Weightage) as Weightage
+            LEFT JOIN (SELECT LOWER(TRIM(Measure)) as measure_key, FIRST(TRIM(Category)) as Category
                        FROM {_LOOKUP}.stars_measurelist GROUP BY LOWER(TRIM(Measure))) ml
               ON LOWER(TRIM(m.measure_name)) = ml.measure_key
             WHERE m.measurement_year BETWEEN 2021 AND 2025
@@ -354,45 +352,6 @@ def market_status():
             result["tables"][tbl] = {"error": str(exc)[:200]}
     result["status"] = "connected"
     return result
-
-
-@router.get("/market/measurelist-match")
-def market_measurelist_match():
-    """Diagnostic: shows how many cms_measure_star_history measures actually
-    join to stars_measurelist, plus samples of matched and unmatched names.
-    Use this to figure out why the measurelist filter is dropping rows."""
-    _LOOKUP = "aiagenticdemo.stars_bronze"
-    out = {}
-    try:
-        out["measurelist_sample"] = query(
-            f"SELECT Measure, Category, Weightage FROM {_LOOKUP}.stars_measurelist LIMIT 20"
-        )
-        out["measurelist_count"] = query(
-            f"SELECT COUNT(DISTINCT LOWER(TRIM(Measure))) as n FROM {_LOOKUP}.stars_measurelist"
-        )[0]["n"]
-        out["history_measure_sample"] = query(
-            f"SELECT DISTINCT measure_name FROM {_CATALOG}.cms_measure_star_history LIMIT 30"
-        )
-        out["history_measure_count"] = query(
-            f"SELECT COUNT(DISTINCT LOWER(TRIM(measure_name))) as n FROM {_CATALOG}.cms_measure_star_history"
-        )[0]["n"]
-        out["matched_count"] = query(f"""
-            SELECT COUNT(DISTINCT LOWER(TRIM(m.measure_name))) as n
-            FROM {_CATALOG}.cms_measure_star_history m
-            INNER JOIN (SELECT LOWER(TRIM(Measure)) as k FROM {_LOOKUP}.stars_measurelist) ml
-              ON LOWER(TRIM(m.measure_name)) = ml.k
-        """)[0]["n"]
-        out["unmatched_history_names"] = query(f"""
-            SELECT DISTINCT m.measure_name
-            FROM {_CATALOG}.cms_measure_star_history m
-            LEFT JOIN (SELECT LOWER(TRIM(Measure)) as k FROM {_LOOKUP}.stars_measurelist) ml
-              ON LOWER(TRIM(m.measure_name)) = ml.k
-            WHERE ml.k IS NULL
-            LIMIT 20
-        """)
-    except Exception as exc:
-        out["error"] = str(exc)[:400]
-    return out
 
 
 def _gen_fallback_measures():
