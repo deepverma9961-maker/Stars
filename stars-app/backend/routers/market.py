@@ -247,8 +247,10 @@ def market_measure_stars(contracts: str = ""):
         return []
     placeholders = ",".join(f"'{c}'" for c in cid_list[:50])
 
-    _LOOKUP = "aiagenticdemo.stars_bronze"
     try:
+        # NOTE: stars_measurelist lookup removed — if that table is missing or
+        # unreadable it silently kills the whole query. Domain is derived from
+        # m.domain code directly (HD*/DD*/HOS*/CAHPS*).
         sql = f"""
             SELECT SUBSTRING(m.contract_id, 1, 5) as contract_id,
                    COALESCE(s.plan_name, m.org_name, m.contract_id) as plan_name,
@@ -256,17 +258,10 @@ def market_measure_stars(contracts: str = ""):
                    COALESCE(s.state, '') as state,
                    CAST(m.measurement_year AS INT) as year,
                    CASE
-                       WHEN ml.Category IS NOT NULL THEN
-                           CASE
-                               WHEN ml.Category LIKE 'Medical Adher%' THEN 'Medical Adherence'
-                               WHEN ml.Category LIKE 'CMS%Admin%' THEN 'Admin'
-                               WHEN ml.Category LIKE 'CAHPS%' THEN 'CAHPS'
-                               WHEN ml.Category LIKE 'HEDIS%' THEN 'HEDIS'
-                               WHEN ml.Category LIKE 'HOS%' THEN 'HOS'
-                               ELSE 'Admin'
-                           END
                        WHEN UPPER(m.domain) LIKE 'HD%' THEN 'HEDIS'
+                       WHEN UPPER(m.domain) LIKE 'PART C%' THEN 'HEDIS'
                        WHEN UPPER(m.domain) LIKE 'DD%' THEN 'Medical Adherence'
+                       WHEN UPPER(m.domain) LIKE 'PART D%' THEN 'Medical Adherence'
                        WHEN UPPER(m.domain) LIKE 'HOS%' THEN 'HOS'
                        WHEN UPPER(m.domain) LIKE '%CAHPS%' THEN 'CAHPS'
                        ELSE 'Admin'
@@ -281,9 +276,6 @@ def market_measure_stars(contracts: str = ""):
                               FIRST(org_name) as org_name, FIRST(state) as state
                        FROM {_CATALOG}.cms_plan_star_history GROUP BY contract_id) s
               ON SUBSTRING(m.contract_id, 1, 5) = s.cid_short
-            LEFT JOIN (SELECT LOWER(TRIM(Measure)) as measure_key, FIRST(TRIM(Category)) as Category
-                       FROM {_LOOKUP}.stars_measurelist GROUP BY LOWER(TRIM(Measure))) ml
-              ON LOWER(TRIM(m.measure_name)) = ml.measure_key
             WHERE m.measurement_year BETWEEN 2021 AND 2025
               AND SUBSTRING(m.contract_id, 1, 5) IN ({placeholders})
             ORDER BY contract_id, m.measurement_year, domain, m.measure_name
