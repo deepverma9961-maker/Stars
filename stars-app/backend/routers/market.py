@@ -253,10 +253,11 @@ def market_measure_stars(contracts: str = ""):
     if len(cid_list) > 500:
         logger.warning("market_measure_stars: truncating %d contracts to 500", len(cid_list))
 
+    _LOOKUP = "aiagenticdemo.stars_bronze"
     try:
-        # NOTE: stars_measurelist lookup removed — if that table is missing or
-        # unreadable it silently kills the whole query. Domain is derived from
-        # m.domain code directly (HD*/DD*/HOS*/CAHPS*).
+        # INNER JOIN stars_measurelist so ONLY measures present in both tables
+        # come through. Domain classification is driven by ml.Category (the
+        # canonical mapping owned by the measurelist), not by m.domain codes.
         sql = f"""
             SELECT SUBSTRING(m.contract_id, 1, 5) as contract_id,
                    COALESCE(s.plan_name, m.org_name, m.contract_id) as plan_name,
@@ -264,18 +265,22 @@ def market_measure_stars(contracts: str = ""):
                    COALESCE(s.state, '') as state,
                    CAST(m.measurement_year AS INT) as year,
                    CASE
-                       WHEN UPPER(m.domain) LIKE 'HD%' THEN 'HEDIS'
-                       WHEN UPPER(m.domain) LIKE 'PART C%' THEN 'HEDIS'
-                       WHEN UPPER(m.domain) LIKE 'DD%' THEN 'Medical Adherence'
-                       WHEN UPPER(m.domain) LIKE 'PART D%' THEN 'Medical Adherence'
-                       WHEN UPPER(m.domain) LIKE 'HOS%' THEN 'HOS'
-                       WHEN UPPER(m.domain) LIKE '%CAHPS%' THEN 'CAHPS'
+                       WHEN ml.Category LIKE 'Medical Adher%' THEN 'Medical Adherence'
+                       WHEN ml.Category LIKE 'CMS%Admin%'     THEN 'Admin'
+                       WHEN ml.Category LIKE 'CAHPS%'         THEN 'CAHPS'
+                       WHEN ml.Category LIKE 'HEDIS%'         THEN 'HEDIS'
+                       WHEN ml.Category LIKE 'HOS%'           THEN 'HOS'
                        ELSE 'Admin'
                    END as domain,
                    m.measure_name,
                    CAST(m.star_rating AS DOUBLE) as star_rating,
                    1 as weight
             FROM {_CATALOG}.cms_measure_star_history m
+            INNER JOIN (SELECT LOWER(TRIM(Measure)) as measure_key,
+                               FIRST(TRIM(Category)) as Category
+                        FROM {_LOOKUP}.stars_measurelist
+                        GROUP BY LOWER(TRIM(Measure))) ml
+              ON LOWER(TRIM(m.measure_name)) = ml.measure_key
             LEFT JOIN (SELECT contract_id,
                               SUBSTRING(contract_id, 1, 5) as cid_short,
                               FIRST(plan_name) as plan_name,
