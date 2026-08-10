@@ -1,15 +1,20 @@
 # Databricks notebook source
-# COMMAND ----------
 # MAGIC %md
 # MAGIC # Silver Layer: Member, Plan, Provider
 # MAGIC Transforms bronze enrollment into `silver_member`, `silver_plan`, `silver_provider`.
 # MAGIC All PII (MBI, phone, email) is SHA-256 hashed. `display_name` is first name + last initial only.
 
 # COMMAND ----------
+
 dbutils.widgets.text("catalog", "aiagenticdemo")
 CATALOG = dbutils.widgets.get("catalog")
 
 # COMMAND ----------
+
+# MAGIC %pip install faker
+
+# COMMAND ----------
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.functions import udf, col, sha2, concat_ws, lit, rand, when, expr
@@ -21,6 +26,7 @@ spark = SparkSession.builder.getOrCreate()
 spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.stars_silver")
 
 # COMMAND ----------
+
 # --- silver_member ---
 bronze = spark.table(f"{CATALOG}.stars_bronze.bronze_enrollment_raw")
 
@@ -50,6 +56,7 @@ silver_member.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.st
 print(f"silver_member: {silver_member.count():,} rows")
 
 # COMMAND ----------
+
 # --- silver_plan ---
 CONTRACTS = [
     ("H3312", "Health Plan Advantage Premier",     "FL", 112_500, "HMO"),
@@ -88,6 +95,7 @@ spark.createDataFrame(plan_rows).write.format("delta").mode("overwrite").saveAsT
 print(f"silver_plan: {len(plan_rows)} rows")
 
 # COMMAND ----------
+
 # --- silver_provider ---
 import random
 from pyspark.sql import Row
