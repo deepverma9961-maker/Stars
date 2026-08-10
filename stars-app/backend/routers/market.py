@@ -273,7 +273,7 @@ def market_measure_stars(contracts: str = ""):
                    END as domain,
                    m.measure_name,
                    CAST(m.star_rating AS DOUBLE) as star_rating,
-                   1 as weight
+                   CAST(COALESCE(ml.Weightage, 1) AS INT) as weight
             FROM {_CATALOG}.cms_measure_star_history m
             LEFT JOIN (SELECT contract_id,
                               SUBSTRING(contract_id, 1, 5) as cid_short,
@@ -281,8 +281,10 @@ def market_measure_stars(contracts: str = ""):
                               FIRST(org_name) as org_name, FIRST(state) as state
                        FROM {_CATALOG}.cms_plan_star_history GROUP BY contract_id) s
               ON SUBSTRING(m.contract_id, 1, 5) = s.cid_short
-            LEFT JOIN (SELECT LOWER(TRIM(Measure)) as measure_key, FIRST(TRIM(Category)) as Category
-                       FROM {_LOOKUP}.stars_measurelist GROUP BY LOWER(TRIM(Measure))) ml
+            INNER JOIN (SELECT LOWER(TRIM(Measure)) as measure_key,
+                               FIRST(TRIM(Category)) as Category,
+                               FIRST(Weightage) as Weightage
+                        FROM {_LOOKUP}.stars_measurelist GROUP BY LOWER(TRIM(Measure))) ml
               ON LOWER(TRIM(m.measure_name)) = ml.measure_key
             WHERE m.measurement_year BETWEEN 2021 AND 2025
               AND SUBSTRING(m.contract_id, 1, 5) IN ({placeholders})
