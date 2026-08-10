@@ -1606,10 +1606,12 @@ function renderCahpsLive(contractId, contractName){
     const sBg = s => '#f3f4f6';
     const sLabel = s => s==='ok'?'ON TRACK':s==='risk'?'AT RISK':'CRITICAL';
     // Star Overview traffic-light: accepts 'green'/'yellow'/'red' (filter labels)
-    // or 'ok'/'risk'/'critical' (internal status codes). Anything else → neutral.
+    // or 'ok'/'risk'/'crit'/'critical' (backend status codes — the live SQL
+    // in cahps.py emits 'crit', fallback data uses 'critical'/'risk'/'ok').
+    // Anything else → neutral.
     const barClr = s => (s==='green'||s==='ok') ? '#16a34a'
                       : (s==='yellow'||s==='risk') ? '#eab308'
-                      : (s==='red'||s==='critical') ? '#dc2626'
+                      : (s==='red'||s==='crit'||s==='critical') ? '#dc2626'
                       : '#9ca3af';
     const rClr = r => '#374151';
 
