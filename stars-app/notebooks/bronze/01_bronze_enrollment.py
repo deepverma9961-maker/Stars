@@ -1,10 +1,10 @@
 # Databricks notebook source
-# COMMAND ----------
 # MAGIC %md
 # MAGIC # Bronze Layer: Enrollment Data
 # MAGIC Generates `bronze_enrollment_raw` — 100k synthetic HIPAA-safe member enrollment records.
 
 # COMMAND ----------
+
 dbutils.widgets.text("seed", "42")
 dbutils.widgets.text("catalog", "aiagenticdemo")
 dbutils.widgets.text("n_members", "100000")
@@ -14,6 +14,12 @@ CATALOG = dbutils.widgets.get("catalog")
 N = int(dbutils.widgets.get("n_members"))
 
 # COMMAND ----------
+
+# DBTITLE 1,Install faker
+# MAGIC %pip install faker -q
+
+# COMMAND ----------
+
 import random
 from faker import Faker
 from pyspark.sql import SparkSession
@@ -27,6 +33,7 @@ rng = random.Random(SEED)
 spark = SparkSession.builder.getOrCreate()
 
 # COMMAND ----------
+
 CONTRACTS = [
     ("H3312", "FL", 112_500), ("H5521", "TX", 98_200), ("H2213", "CA", 134_800),
     ("H6614", "PA", 67_300), ("H7723", "NY", 89_100), ("H8812", "OH", 54_600),
@@ -76,6 +83,7 @@ for i in range(N):
     ))
 
 # COMMAND ----------
+
 _schema = StructType([
     StructField("member_id",          StringType(),  False),
     StructField("synthetic_mbi",      StringType(),  True),
@@ -94,8 +102,8 @@ _schema = StructType([
     StructField("ingestion_ts",       StringType(),  True),
 ])
 df = spark.createDataFrame(rows, _schema)
-spark.sql(f"CREATE CATALOG IF NOT EXISTS {CATALOG}")
-spark.sql(f"CREATE SCHEMA IF NOT EXISTS {CATALOG}.stars_bronze")
+
+
 df.write.format("delta").mode("overwrite").saveAsTable(f"{CATALOG}.stars_bronze.bronze_enrollment_raw")
 print(f"Written {df.count():,} rows to {CATALOG}.stars_bronze.bronze_enrollment_raw")
 display(df.limit(5))
