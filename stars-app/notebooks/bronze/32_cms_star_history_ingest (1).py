@@ -30,12 +30,12 @@ from pyspark.sql.types import (
 )
 
 CATALOG          = "aiagenticdemo"
-MEASUREMENT_YEAR = "2025"
+MEASUREMENT_YEAR = "2027"
 
 # ─── Volume path ─────────────────────────────────────────────────────────────
-VOLUME_FILE = "/Volumes/aiagenticdemo/stars_bronze/data/CMS_StarRatings_REAL_2021_2025 (2) (1).xlsx"
+VOLUME_FILE = "/Volumes/aiagenticdemo/stars_bronze/data/CMS_StarRatings_REAL_2021_2027.xlsx"
 
-YEARS = [2021, 2022, 2023, 2024, 2025]
+YEARS = [2021, 2022, 2023, 2024, 2025,2026,2027]
 
 # ─── Sheet name constants ─────────────────────────────────────────────────────
 SHEET_STARS     = "\U0001f4ca All Contracts (Stars)"   # 📊
@@ -327,6 +327,10 @@ measure_pdf = parse_stars_sheet(xl)
 # COMMAND ----------
 
 CATALOG_1 = "aiagenticdemo"
+
+# COMMAND ----------
+
+plan_pdf.display()
 
 # COMMAND ----------
 

@@ -936,7 +936,7 @@
       <div style="background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;margin-bottom:14px">
         <div style="padding:10px 16px;border-bottom:1px solid #f3f4f6;display:flex;justify-content:space-between;align-items:center;background:#fff8f5">
           <span style="font-size:12px;font-weight:700;color:#F26722">EHO4all measure scorecard — LIS/Dual subgroup</span>
-          <span style="font-size:11px;color:#9ca3af">CMS benchmark comparison · 2025</span>
+          <span style="font-size:11px;color:#9ca3af">CMS benchmark comparison · 2027</span>
         </div>
         <table class="data-table">
           <thead>
@@ -992,7 +992,7 @@
           <span style="width:28px;height:28px;border-radius:7px;background:#fff0e6;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📈</span>
           Market Analysis
         </div>
-        <div style="font-size:11px;color:#9ca3af;margin-top:2px;margin-left:36px">CMS Enrollment · Plan Star History · Measure Star History · 2021–2025</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;margin-left:36px">CMS Enrollment · Plan Star History · Measure Star History · 2021–2027</div>
       </div>
       <div style="display:flex;gap:8px">
         <button class="ma-export-btn" onclick="maExportCSV()">⬇ Export CSV</button>
@@ -1016,7 +1016,7 @@
 
         <!-- Plan Star Ratings Table -->
         <div class="ma-table-card">
-          <div class="ma-table-title">Plan Star Ratings — 5-Year Comparison <span class="ma-table-sub" id="ma-plan-count"></span></div>
+          <div class="ma-table-title">Plan Star Ratings — 7-Year Comparison <span class="ma-table-sub" id="ma-plan-count"></span></div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
             <div class="ma-dd-wrap" style="min-width:200px">
               <div class="ma-dd-trigger" id="ma-orgtop-trigger" onclick="maToggleDD('orgtop')">
@@ -1060,7 +1060,7 @@
 
         <!-- Measure Star Ratings Table -->
         <div class="ma-table-card">
-          <div class="ma-table-title">Measure Star Ratings — 5-Year by Domain <span class="ma-table-sub" id="ma-measure-count"></span></div>
+          <div class="ma-table-title">Measure Star Ratings — 7-Year by Domain <span class="ma-table-sub" id="ma-measure-count"></span></div>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap">
             <div id="ma-domain-chips" style="display:flex;flex-wrap:wrap;gap:2px">
               <div class="ma-dom-chip on" onclick="maDomToggle(this)" data-domain="all">All</div>
@@ -1682,7 +1682,7 @@ function renderCahpsLive(contractId, contractName){
               return `<div style="display:grid;grid-template-columns:2fr 1.5fr 120px 100px;padding:16px 20px;border-bottom:1px solid #f9fafb;cursor:pointer" onmouseover="this.style.background='#f9fafb'" onmouseout="this.style.background=''">
                 <div>
                   <div style="font-size:12px;color:#374151;line-height:1.5">${q.q}</div>
-                  <div style="font-size:11px;color:#F26722;margin-top:4px;cursor:pointer">↓ ${notTop} members did not give top-box — click to view</div>
+                  <div style="display:none">↓ ${notTop} members did not give top-box — click to view</div>
                 </div>
                 <div style="font-size:12px;color:#9ca3af;padding-right:12px;align-self:center">${q.proxy}</div>
                 <div style="align-self:center"><span style="background:#f3f4f6;color:#374151;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600">${q.rule}</span></div>
@@ -4590,7 +4590,7 @@ function maRenderAll(){
 // ── KPI Board ──
 function maRenderKPIs(){
   const filteredPlanData=MA_PLAN_STARS.filter(d=>maSelectedContracts.has(d.contract_id)&&d.overall_star!=null&&!isNaN(d.overall_star));
-  const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
+  const latestYear=2026;
   const latestData=latestYear?filteredPlanData.filter(d=>d.year===latestYear):[];
 
   // Total Enrollment (sum latest year enrollment for selected contracts with valid data)
@@ -4658,7 +4658,7 @@ function maRenderPlanTable(){
     if(v!=null&&!isNaN(v))grouped[d.contract_id].stars[d.year]=v;
   });
   // Attach latest enrollment to each group
-  const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
+  const latestYear=2026;
   Object.keys(grouped).forEach(cid=>{
     const eRow=MA_ENROLL.find(d=>d.contract_id===cid&&d.year===latestYear);
     grouped[cid].enrollment=eRow?eRow.enrollment:null;
