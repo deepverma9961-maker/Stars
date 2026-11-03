@@ -195,7 +195,6 @@ def market_enrollment():
                        FROM {_CATALOG}.cms_plan_star_history
                        GROUP BY contract_id) s
               ON SUBSTRING(e.contract_id, 1, 5) = s.cid_short
-              where e.measurement_year = 2026
             ORDER BY contract_id, e.measurement_year
         """
         logger.info("market_enrollment: executing query against %s.cms_plan_enrollment_history", _CATALOG)

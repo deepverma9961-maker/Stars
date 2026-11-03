@@ -129,24 +129,145 @@
     .auto-assign-row:last-child{border-bottom:none}
     .assign-label{color:#6b7280;width:100px;flex-shrink:0}
     .assign-val{font-weight:600;color:#111;flex:1}
-    .mkt-hero{background:linear-gradient(135deg,#1a1a2e 0%,#2d1b1b 60%,#3d1a1a 100%);padding:28px 32px;color:#fff;flex-shrink:0}
-    .mkt-hero h1{font-size:36px;font-weight:800;line-height:1.15;margin-bottom:12px;letter-spacing:-.5px}
-    .mkt-hero h1 span{color:#F26722}
-    .mkt-hero-sub{font-size:15px;color:#9ca3af;max-width:600px;line-height:1.5;margin-bottom:12px}
+    .mkt-hero{background:linear-gradient(135deg,#0f0f1a 0%,#1a1028 30%,#2a1520 60%,#1e1018 100%);padding:48px 40px 40px;color:#fff;flex-shrink:0;position:relative;overflow:hidden}
+    .mkt-hero::before{content:'';position:absolute;top:-100px;right:-60px;width:500px;height:500px;background:radial-gradient(circle,rgba(242,103,34,.25) 0%,transparent 65%);pointer-events:none;animation:heroGlow1 5s ease-in-out infinite alternate}
+    .mkt-hero::after{content:'';position:absolute;bottom:-40px;left:15%;width:400px;height:400px;background:radial-gradient(circle,rgba(242,103,34,.18) 0%,transparent 65%);pointer-events:none;animation:heroGlow2 7s ease-in-out infinite alternate}
+    @keyframes heroGlow1{0%{transform:translate(0,0) scale(1);opacity:.6}100%{transform:translate(-50px,40px) scale(1.3);opacity:1}}
+    @keyframes heroGlow2{0%{transform:translate(0,0) scale(1);opacity:.4}100%{transform:translate(40px,-30px) scale(1.25);opacity:1}}
+    .mkt-hero-particles{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+    .mkt-hero-particles span{position:absolute;border-radius:50%;animation:particleFloat linear infinite}
+    .mkt-hero-particles span:nth-child(1){left:3%;top:90%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:7s;animation-delay:0s}
+    .mkt-hero-particles span:nth-child(2){left:8%;top:85%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:9s;animation-delay:0.3s}
+    .mkt-hero-particles span:nth-child(3){left:13%;top:95%;width:4px;height:4px;background:rgba(242,103,34,.35);animation-duration:8s;animation-delay:1.2s}
+    .mkt-hero-particles span:nth-child(4){left:18%;top:80%;width:2px;height:2px;background:rgba(255,138,80,.4);animation-duration:10s;animation-delay:0.8s}
+    .mkt-hero-particles span:nth-child(5){left:22%;top:92%;width:3px;height:3px;background:rgba(255,255,255,.12);animation-duration:6s;animation-delay:2s}
+    .mkt-hero-particles span:nth-child(6){left:27%;top:88%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:11s;animation-delay:0.5s}
+    .mkt-hero-particles span:nth-child(7){left:32%;top:96%;width:3px;height:3px;background:rgba(255,138,80,.3);animation-duration:7.5s;animation-delay:1.8s}
+    .mkt-hero-particles span:nth-child(8){left:36%;top:82%;width:2px;height:2px;background:rgba(255,255,255,.18);animation-duration:9.5s;animation-delay:3s}
+    .mkt-hero-particles span:nth-child(9){left:40%;top:90%;width:4px;height:4px;background:rgba(242,103,34,.4);animation-duration:8.5s;animation-delay:0.2s}
+    .mkt-hero-particles span:nth-child(10){left:44%;top:87%;width:2px;height:2px;background:rgba(255,255,255,.1);animation-duration:12s;animation-delay:1s}
+    .mkt-hero-particles span:nth-child(11){left:48%;top:94%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:6.5s;animation-delay:2.5s}
+    .mkt-hero-particles span:nth-child(12){left:52%;top:85%;width:2px;height:2px;background:rgba(255,138,80,.35);animation-duration:10.5s;animation-delay:0.7s}
+    .mkt-hero-particles span:nth-child(13){left:56%;top:91%;width:3px;height:3px;background:rgba(255,255,255,.14);animation-duration:7.2s;animation-delay:1.5s}
+    .mkt-hero-particles span:nth-child(14){left:60%;top:97%;width:4px;height:4px;background:rgba(242,103,34,.45);animation-duration:9.2s;animation-delay:3.5s}
+    .mkt-hero-particles span:nth-child(15){left:63%;top:83%;width:2px;height:2px;background:rgba(255,138,80,.4);animation-duration:8.2s;animation-delay:0.4s}
+    .mkt-hero-particles span:nth-child(16){left:67%;top:93%;width:3px;height:3px;background:rgba(242,103,34,.35);animation-duration:11.5s;animation-delay:2.2s}
+    .mkt-hero-particles span:nth-child(17){left:71%;top:86%;width:2px;height:2px;background:rgba(255,255,255,.16);animation-duration:6.8s;animation-delay:1.3s}
+    .mkt-hero-particles span:nth-child(18){left:74%;top:95%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:7.8s;animation-delay:0.9s}
+    .mkt-hero-particles span:nth-child(19){left:78%;top:89%;width:4px;height:4px;background:rgba(255,138,80,.3);animation-duration:10.2s;animation-delay:2.8s}
+    .mkt-hero-particles span:nth-child(20){left:82%;top:92%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:8.8s;animation-delay:0.6s}
+    .mkt-hero-particles span:nth-child(21){left:5%;top:75%;width:2px;height:2px;background:rgba(242,103,34,.3);animation-duration:13s;animation-delay:4s}
+    .mkt-hero-particles span:nth-child(22){left:15%;top:70%;width:3px;height:3px;background:rgba(255,255,255,.1);animation-duration:14s;animation-delay:1.7s}
+    .mkt-hero-particles span:nth-child(23){left:25%;top:78%;width:2px;height:2px;background:rgba(242,103,34,.4);animation-duration:8s;animation-delay:3.2s}
+    .mkt-hero-particles span:nth-child(24){left:35%;top:72%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:9s;animation-delay:0.1s}
+    .mkt-hero-particles span:nth-child(25){left:45%;top:76%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:11s;animation-delay:2.3s}
+    .mkt-hero-particles span:nth-child(26){left:53%;top:80%;width:4px;height:4px;background:rgba(242,103,34,.45);animation-duration:7s;animation-delay:1.1s}
+    .mkt-hero-particles span:nth-child(27){left:62%;top:74%;width:2px;height:2px;background:rgba(255,138,80,.3);animation-duration:12.5s;animation-delay:3.8s}
+    .mkt-hero-particles span:nth-child(28){left:70%;top:79%;width:3px;height:3px;background:rgba(242,103,34,.35);animation-duration:6.2s;animation-delay:0.8s}
+    .mkt-hero-particles span:nth-child(29){left:80%;top:73%;width:2px;height:2px;background:rgba(255,255,255,.13);animation-duration:10s;animation-delay:2.6s}
+    .mkt-hero-particles span:nth-child(30){left:88%;top:77%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:8.5s;animation-delay:1.4s}
+    .mkt-hero-particles span:nth-child(31){left:6%;top:65%;width:3px;height:3px;background:rgba(255,138,80,.45);animation-duration:9.8s;animation-delay:3.3s}
+    .mkt-hero-particles span:nth-child(32){left:16%;top:60%;width:2px;height:2px;background:rgba(242,103,34,.3);animation-duration:7.3s;animation-delay:0.2s}
+    .mkt-hero-particles span:nth-child(33){left:26%;top:68%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:11.8s;animation-delay:2.1s}
+    .mkt-hero-particles span:nth-child(34){left:38%;top:62%;width:2px;height:2px;background:rgba(242,103,34,.5);animation-duration:6s;animation-delay:1.6s}
+    .mkt-hero-particles span:nth-child(35){left:47%;top:66%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:13.5s;animation-delay:4.2s}
+    .mkt-hero-particles span:nth-child(36){left:57%;top:63%;width:2px;height:2px;background:rgba(255,255,255,.14);animation-duration:8.3s;animation-delay:0.5s}
+    .mkt-hero-particles span:nth-child(37){left:66%;top:69%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:10.8s;animation-delay:2.9s}
+    .mkt-hero-particles span:nth-child(38){left:76%;top:64%;width:2px;height:2px;background:rgba(255,138,80,.3);animation-duration:7.6s;animation-delay:1.2s}
+    .mkt-hero-particles span:nth-child(39){left:84%;top:67%;width:4px;height:4px;background:rgba(242,103,34,.35);animation-duration:9.5s;animation-delay:3.6s}
+    .mkt-hero-particles span:nth-child(40){left:92%;top:62%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:6.7s;animation-delay:0.7s}
+    .mkt-hero-particles span:nth-child(41){left:2%;top:55%;width:3px;height:3px;background:rgba(242,103,34,.45);animation-duration:12s;animation-delay:2.4s}
+    .mkt-hero-particles span:nth-child(42){left:11%;top:50%;width:2px;height:2px;background:rgba(255,255,255,.16);animation-duration:8s;animation-delay:1s}
+    .mkt-hero-particles span:nth-child(43){left:21%;top:58%;width:3px;height:3px;background:rgba(255,138,80,.4);animation-duration:10.5s;animation-delay:3.1s}
+    .mkt-hero-particles span:nth-child(44){left:31%;top:52%;width:2px;height:2px;background:rgba(242,103,34,.35);animation-duration:7.2s;animation-delay:0.3s}
+    .mkt-hero-particles span:nth-child(45){left:42%;top:56%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:14s;animation-delay:2.7s}
+    .mkt-hero-particles span:nth-child(46){left:51%;top:53%;width:2px;height:2px;background:rgba(242,103,34,.5);animation-duration:6.5s;animation-delay:1.8s}
+    .mkt-hero-particles span:nth-child(47){left:59%;top:57%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:9.2s;animation-delay:4.5s}
+    .mkt-hero-particles span:nth-child(48){left:68%;top:51%;width:2px;height:2px;background:rgba(255,255,255,.13);animation-duration:11.2s;animation-delay:0.6s}
+    .mkt-hero-particles span:nth-child(49){left:77%;top:55%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:7.8s;animation-delay:2s}
+    .mkt-hero-particles span:nth-child(50){left:86%;top:58%;width:4px;height:4px;background:rgba(255,138,80,.45);animation-duration:8.6s;animation-delay:1.4s}
+    .mkt-hero-particles span:nth-child(51){left:9%;top:45%;width:2px;height:2px;background:rgba(242,103,34,.35);animation-duration:13s;animation-delay:3.4s}
+    .mkt-hero-particles span:nth-child(52){left:19%;top:40%;width:3px;height:3px;background:rgba(255,255,255,.11);animation-duration:6.3s;animation-delay:0.9s}
+    .mkt-hero-particles span:nth-child(53){left:29%;top:48%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:10s;animation-delay:2.3s}
+    .mkt-hero-particles span:nth-child(54){left:39%;top:42%;width:3px;height:3px;background:rgba(255,138,80,.3);animation-duration:8.4s;animation-delay:1.6s}
+    .mkt-hero-particles span:nth-child(55){left:49%;top:46%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:12.5s;animation-delay:4.1s}
+    .mkt-hero-particles span:nth-child(56){left:58%;top:43%;width:4px;height:4px;background:rgba(242,103,34,.4);animation-duration:7s;animation-delay:0.4s}
+    .mkt-hero-particles span:nth-child(57){left:69%;top:47%;width:2px;height:2px;background:rgba(255,138,80,.4);animation-duration:9.8s;animation-delay:2.6s}
+    .mkt-hero-particles span:nth-child(58){left:79%;top:41%;width:3px;height:3px;background:rgba(242,103,34,.3);animation-duration:6.8s;animation-delay:1.3s}
+    .mkt-hero-particles span:nth-child(59){left:87%;top:48%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:11s;animation-delay:3.7s}
+    .mkt-hero-particles span:nth-child(60){left:95%;top:44%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:8s;animation-delay:0.8s}
+    .mkt-hero-particles span:nth-child(61){left:4%;top:35%;width:2px;height:2px;background:rgba(255,138,80,.35);animation-duration:10.3s;animation-delay:2.8s}
+    .mkt-hero-particles span:nth-child(62){left:14%;top:30%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:7.5s;animation-delay:1.1s}
+    .mkt-hero-particles span:nth-child(63){left:24%;top:38%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:13.5s;animation-delay:4.3s}
+    .mkt-hero-particles span:nth-child(64){left:34%;top:32%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:6.2s;animation-delay:0.5s}
+    .mkt-hero-particles span:nth-child(65){left:43%;top:36%;width:3px;height:3px;background:rgba(255,138,80,.3);animation-duration:9s;animation-delay:2.2s}
+    .mkt-hero-particles span:nth-child(66){left:54%;top:33%;width:2px;height:2px;background:rgba(255,255,255,.14);animation-duration:11.5s;animation-delay:1.7s}
+    .mkt-hero-particles span:nth-child(67){left:64%;top:37%;width:3px;height:3px;background:rgba(242,103,34,.35);animation-duration:8.2s;animation-delay:3.9s}
+    .mkt-hero-particles span:nth-child(68){left:73%;top:31%;width:2px;height:2px;background:rgba(255,138,80,.45);animation-duration:7.3s;animation-delay:0.6s}
+    .mkt-hero-particles span:nth-child(69){left:83%;top:35%;width:4px;height:4px;background:rgba(242,103,34,.3);animation-duration:10.8s;animation-delay:2.5s}
+    .mkt-hero-particles span:nth-child(70){left:91%;top:38%;width:2px;height:2px;background:rgba(255,255,255,.12);animation-duration:6s;animation-delay:1.5s}
+    .mkt-hero-particles span:nth-child(71){left:7%;top:25%;width:3px;height:3px;background:rgba(242,103,34,.5);animation-duration:12s;animation-delay:3.5s}
+    .mkt-hero-particles span:nth-child(72){left:17%;top:20%;width:2px;height:2px;background:rgba(255,255,255,.15);animation-duration:8.5s;animation-delay:0.2s}
+    .mkt-hero-particles span:nth-child(73){left:28%;top:28%;width:3px;height:3px;background:rgba(255,138,80,.4);animation-duration:9.5s;animation-delay:2.1s}
+    .mkt-hero-particles span:nth-child(74){left:37%;top:22%;width:2px;height:2px;background:rgba(242,103,34,.35);animation-duration:7s;animation-delay:1.4s}
+    .mkt-hero-particles span:nth-child(75){left:46%;top:26%;width:4px;height:4px;background:rgba(255,255,255,.1);animation-duration:14s;animation-delay:4.4s}
+    .mkt-hero-particles span:nth-child(76){left:55%;top:23%;width:2px;height:2px;background:rgba(242,103,34,.45);animation-duration:6.5s;animation-delay:0.7s}
+    .mkt-hero-particles span:nth-child(77){left:65%;top:27%;width:3px;height:3px;background:rgba(255,138,80,.35);animation-duration:10.5s;animation-delay:2.9s}
+    .mkt-hero-particles span:nth-child(78){left:75%;top:21%;width:2px;height:2px;background:rgba(255,255,255,.13);animation-duration:8s;animation-delay:1.8s}
+    .mkt-hero-particles span:nth-child(79){left:85%;top:25%;width:3px;height:3px;background:rgba(242,103,34,.4);animation-duration:11.2s;animation-delay:3.2s}
+    .mkt-hero-particles span:nth-child(80){left:93%;top:28%;width:4px;height:4px;background:rgba(255,138,80,.5);animation-duration:7.8s;animation-delay:0.3s}
+    @keyframes particleFloat{0%{transform:translateY(0) translateX(0);opacity:0}8%{opacity:1}85%{opacity:.8}100%{transform:translateY(-180px) translateX(25px);opacity:0}}
+    .mkt-hero h1{font-size:42px;font-weight:800;line-height:1.12;margin-bottom:16px;letter-spacing:-.8px}
+    .mkt-hero h1 span{color:#F26722;background:linear-gradient(135deg,#F26722,#ff8a50);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .mkt-hero-sub{font-size:15px;color:#b0b3bf;max-width:620px;line-height:1.65;margin-bottom:20px}
+    .mkt-hero-stats{display:flex;gap:32px;margin-top:8px}
+    .mkt-hero-stat{text-align:left}
+    .mkt-hero-stat-val{font-size:28px;font-weight:800;color:#fff;line-height:1.1}
+    .mkt-hero-stat-val em{font-style:normal;color:#F26722}
+    .mkt-hero-stat-lbl{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:500}
     .mkt-body{padding:20px 24px}
-    .cap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;margin-bottom:12px}
-    .cap-card{padding:12px 14px;border-right:1px solid #e5e7eb;cursor:pointer;transition:background .15s;position:relative}
+    .cap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:16px}
+    .cap-card{padding:18px 16px;border-radius:14px;cursor:pointer;transition:all .25s ease;position:relative;background:#fff;border:1px solid #e8eaef;box-shadow:0 1px 3px rgba(0,0,0,.04)}
     .cap-card:last-child{border-right:none}
-    .cap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#F26722}
-    .cap-card:hover{background:#fef9f9}
-    .cap-icon{width:28px;height:28px;background:#fef2f2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;margin-bottom:8px}
-    .cap-title{font-size:12px;font-weight:700;color:#111;margin-bottom:4px;line-height:1.2}
-    .cap-desc{font-size:11px;color:#6b7280;line-height:1.4;margin-bottom:8px}
-    .cap-link{font-size:11px;font-weight:600;color:#F26722}
+    .cap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#F26722,#ff8a50);border-radius:14px 14px 0 0;opacity:.8;transition:opacity .25s}
+    .cap-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(242,103,34,.12);border-color:#fdd0b1}
+    .cap-card:hover::before{opacity:1}
+    .cap-icon{width:36px;height:36px;background:linear-gradient(135deg,#fff5ef,#ffe8d6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px}
+    .cap-title{font-size:13px;font-weight:700;color:#111;margin-bottom:6px;line-height:1.3}
+    .cap-desc{font-size:11px;color:#6b7280;line-height:1.5;margin-bottom:10px}
+    .cap-link{font-size:11px;font-weight:700;color:#F26722;transition:color .15s;display:inline-flex;align-items:center;gap:4px}
+    .cap-card:hover .cap-link{color:#d4551a}
     .mkt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
     .mkt-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px 14px}
     .mkt-card-title{font-size:12px;font-weight:700;color:#111;margin-bottom:2px}
     .mkt-card-sub{font-size:10px;color:#6b7280;margin-bottom:8px}
+    .mkt-feat-card{flex:1 1 calc(50% - 8px);min-width:280px;display:flex;flex-direction:column;justify-content:space-between;border-radius:16px;padding:24px 28px;cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden}
+    .mkt-feat-card:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(242,103,34,.15)}
+    .mkt-feat-card.exec{background:linear-gradient(135deg,#fff7f0,#ffe8d4);border:1px solid #f5c8a0}
+    .mkt-feat-card.market{background:linear-gradient(135deg,#f0f4ff,#e0e8ff);border:1px solid #b8c8f0}
+    .mkt-feat-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+    .mkt-feat-card.exec .mkt-feat-icon{background:rgba(242,103,34,.12)}
+    .mkt-feat-card.market .mkt-feat-icon{background:rgba(59,130,246,.1)}
+    .mkt-section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#9ca3af;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+    .mkt-section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,#e5e7eb,transparent)}
+    .mkt-feat-card{transition:all .3s ease;animation:mktCardFadeUp .6s ease-out both}
+    .mkt-feat-card:nth-child(2){animation-delay:.15s}
+    .mkt-feat-card.exec::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,transparent 40%,rgba(242,103,34,.06) 60%,transparent 80%);background-size:300% 300%;animation:cardShimmer 6s ease-in-out infinite;border-radius:16px;pointer-events:none}
+    .mkt-feat-card.market::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,transparent 40%,rgba(59,130,246,.06) 60%,transparent 80%);background-size:300% 300%;animation:cardShimmer 7s ease-in-out infinite;animation-delay:1s;border-radius:16px;pointer-events:none}
+    @keyframes cardShimmer{0%{background-position:100% 100%}50%{background-position:0% 0%}100%{background-position:100% 100%}}
+    @keyframes mktCardFadeUp{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+    .cap-card{animation:capCardEntrance .5s ease-out both}
+    .cap-card:nth-child(1){animation-delay:.1s}
+    .cap-card:nth-child(2){animation-delay:.18s}
+    .cap-card:nth-child(3){animation-delay:.26s}
+    .cap-card:nth-child(4){animation-delay:.34s}
+    .cap-card:nth-child(5){animation-delay:.42s}
+    @keyframes capCardEntrance{0%{opacity:0;transform:translateY(16px) scale(.97)}100%{opacity:1;transform:translateY(0) scale(1)}}
+    .cap-card::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:linear-gradient(90deg,#F26722,#ff8a50);transition:all .3s ease;transform:translateX(-50%);border-radius:0 0 14px 14px}
+    .cap-card:hover::after{width:100%;left:0;transform:translateX(0)}
+    .mkt-section-title{animation:mktCardFadeUp .5s ease-out both;animation-delay:.05s}
+    .mkt-feat-card .btn-primary{transition:all .2s ease}
+    .mkt-feat-card .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
     .sum-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
     .sum-card{background:#1e293b;border:none;border-radius:10px;padding:14px 16px;border-top:3px solid #F26722}
     .sum-card.red{border-top-color:#F26722}.sum-card.blue{border-top-color:#F26722}.sum-card.teal{border-top-color:#F26722}.sum-card.amber{border-top-color:#F26722}
@@ -439,41 +560,47 @@
   <!-- MARKETING -->
   <div id="pg-marketing" class="page active">
     <div class="mkt-hero">
-      <div style="margin-bottom:14px;display:flex;align-items:center;gap:10px">
-        <span style="font-size:26px;font-weight:900;color:#F26722;letter-spacing:-0.5px;line-height:1">EXL</span>
-        <span style="color:#d1d5db;font-size:18px;font-weight:200">|</span>
-        <span style="font-size:13px;color:#9ca3af;font-weight:500">StarPulse · Medicare Stars Platform</span>
+      <div class="mkt-hero-particles"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div style="margin-bottom:20px;display:flex;align-items:center;gap:12px;position:relative;z-index:1">
+        <span style="font-size:30px;font-weight:900;color:#F26722;letter-spacing:-0.5px;line-height:1">EXL</span>
+        <span style="color:rgba(255,255,255,.2);font-size:22px;font-weight:200">|</span>
+        <span style="font-size:14px;color:rgba(255,255,255,.5);font-weight:500;letter-spacing:.02em">StarPulse · Medicare Stars Platform</span>
       </div>
-      <h1>Close every gap.<br><span>Reach 4★ and beyond.</span></h1>
-      <p class="mkt-hero-sub">StarPulse is an AI-powered Medicare Stars platform that identifies member gaps, automates outreach campaigns, and projects your CMS star rating — across all domains, in real time.</p>
+      <h1 style="position:relative;z-index:1">Close every gap.<br><span>Reach 4★ and beyond.</span></h1>
+      <p class="mkt-hero-sub" style="position:relative;z-index:1">StarPulse is an AI-powered Medicare Stars platform that identifies member gaps, automates outreach campaigns, and projects your CMS star rating — across all domains, in real time.</p>
+      <div class="mkt-hero-stats" style="position:relative;z-index:1">
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>5</em></div><div class="mkt-hero-stat-lbl">Star Domains</div></div>
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>45+</em></div><div class="mkt-hero-stat-lbl">CMS Measures</div></div>
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>AI</em></div><div class="mkt-hero-stat-lbl">Powered Outreach</div></div>
+        <div class="mkt-hero-stat"><div class="mkt-hero-stat-val"><em>Real-time</em></div><div class="mkt-hero-stat-lbl">Projections</div></div>
+      </div>
     </div>
-    <div class="scroll" style="padding:12px 24px">
-      <!-- Executive Overview + Market Analysis — side by side -->
-      <div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap">
-        <div onclick="showPage('executive')" style="flex:1 1 calc(50% - 8px);min-width:280px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,#fff5ef,#ffe8d6);border:1px solid #F26722;border-radius:12px;padding:16px 24px;cursor:pointer">
+    <div class="scroll" style="padding:20px 28px">
+      <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap">
+        <div class="mkt-feat-card exec" onclick="showPage('executive')">
           <div>
-            <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px">Executive Overview</div>
-            <div style="font-size:12px;color:#7c3a10;line-height:1.5">Monitor all top contracts by enrollment, compare PY to Projected ratings, and identify underperforming plans.</div>
+            <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:6px">Executive Overview</div>
+            <div style="font-size:12px;color:#7c3a10;line-height:1.6">Monitor all top contracts by enrollment, compare PY to Projected ratings, and identify underperforming plans.</div>
           </div>
-          <div style="margin-top:12px"><button class="btn-primary" style="padding:10px 24px;font-size:13px;background:#F26722" onclick="showPage('executive')">View Executive Overview →</button></div>
+          <div style="margin-top:16px"><button class="btn-primary" style="padding:10px 28px;font-size:13px;background:linear-gradient(135deg,#F26722,#e05a1a);border-radius:10px;border:none;color:#fff;cursor:pointer;font-weight:600;box-shadow:0 4px 12px rgba(242,103,34,.25)" onclick="showPage('executive')">View Executive Overview →</button></div>
         </div>
-        <div onclick="showPage('market')" style="flex:1 1 calc(50% - 8px);min-width:280px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,#fff5ef,#ffe8d6);border:1px solid #F26722;border-radius:12px;padding:16px 24px;cursor:pointer">
+        <div class="mkt-feat-card market" onclick="showPage('market')">
           <div>
-            <div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px">Market Analysis</div>
-            <div style="font-size:12px;color:#7c3a10;line-height:1.5">Analyze CMS enrollment trends, compare plan star ratings, and identify market opportunities across organizations and contracts.</div>
+            <div style="font-size:16px;font-weight:700;color:#111;margin-bottom:6px">Market Analysis</div>
+            <div style="font-size:12px;color:#3b4f80;line-height:1.6">Analyze CMS enrollment trends, compare plan star ratings, and identify market opportunities across organizations and contracts.</div>
           </div>
-          <div style="margin-top:12px"><button class="btn-primary" style="padding:10px 24px;font-size:13px;background:#F26722" onclick="showPage('market')">View Market Analysis →</button></div>
+          <div style="margin-top:16px"><button class="btn-primary" style="padding:10px 28px;font-size:13px;background:linear-gradient(135deg,#3b82f6,#2563eb);border-radius:10px;border:none;color:#fff;cursor:pointer;font-weight:600;box-shadow:0 4px 12px rgba(59,130,246,.25)" onclick="showPage('market')">View Market Analysis →</button></div>
         </div>
       </div>
-      <div class="section-title">Platform Capabilities</div>
-      <div class="cap-grid" style="margin-bottom:24px">
+      <div class="mkt-section-title">Platform Capabilities</div>
+      <div class="cap-grid" style="margin-bottom:28px">
         <div class="cap-card" onclick="showPage('hedis')"><div class="cap-title">HEDIS Clinical Quality</div><div class="cap-desc">Leverage AI to monitor HEDIS measures, pinpoint gaps, and engage members.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('cahps')"><div class="cap-title">CAHPS Member Experience</div><div class="cap-desc">Analyze CAHPS survey data to uncover drivers of member satisfaction.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('hos')"><div class="cap-title">HOS Health Outcomes</div><div class="cap-desc">Track physical and mental health outcomes to support star rating goals.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('simulator')"><div class="cap-title">Medical Adherence</div><div class="cap-desc">Monitor PDC-based adherence and close pharmacy gaps.</div><div class="cap-link">Explore →</div></div>
         <div class="cap-card" onclick="showPage('executive')"><div class="cap-title">Admin / Operational</div><div class="cap-desc">Track appeals, call center access, quality scores, and complaints.</div><div class="cap-link">Explore →</div></div>
       </div>
-      <div class="section-title">Quick Navigation</div>
+      <div class="mkt-section-title">Quick Navigation</div>
       <div class="cap-grid">
         <div class="cap-card" onclick="showPage('simulator')"><div class="cap-title">Simulator</div><div class="cap-desc">Model scenarios and see their impact on Star ratings in real-time.</div><div class="cap-link">Launch →</div></div>
         <div class="cap-card" onclick="showPage('agent')"><div class="cap-title">Agent Execution</div><div class="cap-desc">Manage outreach campaigns with tailored agent scripts.</div><div class="cap-link">Launch →</div></div>
@@ -1682,7 +1809,6 @@ function renderCahpsLive(contractId, contractName){
               return `<div style="display:grid;grid-template-columns:2fr 1.5fr 120px 100px;padding:16px 20px;border-bottom:1px solid #f9fafb;cursor:pointer" onmouseover="this.style.background='#f9fafb'" onmouseout="this.style.background=''">
                 <div>
                   <div style="font-size:12px;color:#374151;line-height:1.5">${q.q}</div>
-                  <div style="font-size:11px;color:#F26722;margin-top:4px;cursor:pointer">↓ ${notTop} members did not give top-box — click to view</div>
                 </div>
                 <div style="font-size:12px;color:#9ca3af;padding-right:12px;align-self:center">${q.proxy}</div>
                 <div style="align-self:center"><span style="background:#f3f4f6;color:#374151;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600">${q.rule}</span></div>
@@ -4593,9 +4719,11 @@ function maRenderKPIs(){
   const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
   const latestData=latestYear?filteredPlanData.filter(d=>d.year===latestYear):[];
 
-  // Total Enrollment (sum latest year enrollment for selected contracts with valid data)
+  // Total Enrollment (sum latest year that has enrollment for selected contracts)
   const validContractIds=new Set(filteredPlanData.map(d=>d.contract_id));
-  const filteredEnroll=MA_ENROLL.filter(d=>validContractIds.has(d.contract_id)&&d.year===latestYear);
+  const enrollYears=[...new Set(MA_ENROLL.filter(d=>validContractIds.has(d.contract_id)&&d.enrollment>0).map(d=>d.year))].sort();
+  const enrollLatest=enrollYears.length?enrollYears[enrollYears.length-1]:latestYear;
+  const filteredEnroll=MA_ENROLL.filter(d=>validContractIds.has(d.contract_id)&&d.year===enrollLatest);
   const totalEnroll=filteredEnroll.reduce((s,d)=>s+(d.enrollment||0),0);
   if(totalEnroll>0){
     const fmt=totalEnroll>=1e6?(totalEnroll/1e6).toFixed(1)+'M':totalEnroll>=1e3?(totalEnroll/1e3).toFixed(0)+'K':totalEnroll.toLocaleString();
@@ -4657,11 +4785,10 @@ function maRenderPlanTable(){
     const v=d.overall_star;
     if(v!=null&&!isNaN(v))grouped[d.contract_id].stars[d.year]=v;
   });
-  // Attach latest enrollment to each group
-  const latestYear=MA_YEARS.length?MA_YEARS[MA_YEARS.length-1]:null;
+  // Attach latest enrollment to each group (use latest year with enrollment data)
   Object.keys(grouped).forEach(cid=>{
-    const eRow=MA_ENROLL.find(d=>d.contract_id===cid&&d.year===latestYear);
-    grouped[cid].enrollment=eRow?eRow.enrollment:null;
+    const eRows=MA_ENROLL.filter(d=>d.contract_id===cid&&d.enrollment>0).sort((a,b)=>a.year-b.year);
+    grouped[cid].enrollment=eRows.length?eRows[eRows.length-1].enrollment:null;
   });
   // Exclude rows where ALL yearly ratings are missing after filtering
   let cids=Object.keys(grouped).filter(cid=>Object.keys(grouped[cid].stars).length>0);
